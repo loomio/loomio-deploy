@@ -1,26 +1,33 @@
 # loomio-deploy
 
-This repo is a basic docker-compose configuration for running Loomio on your own server.
+This repo contains a basic docker-compose configuration for running Loomio on your own server.
 
-This README is a guide to setting up Loomio using this docker-compose based system.
+This README is a guide to setting up Loomio using this docker-compose based system using a single host.
 
 ## What you'll need
-I assume that you have root access to a server running a default configuration of Ubuntu 14.04 x64.
-You'll also need a public IP address for the server and a domain name which you can create DNS records for.
-Finally you'll need some kind of SMTP server for sending email. More on that below.
+* Root access to a server, on a public IP address, running a default configuration of Ubuntu 14.04 x64.
+
+* A domain name which you can create DNS records for.
+
+* An SMTP server for sending email. More on that below.
 
 ## Network configuration
 What hostname will you be using for your Loomio instance? What is the IP address of your server?
 
 For the purposes of this example, the hostname will be loomio.example.com and the IP address is 123.123.123.123
 
-
 ### DNS Records
 
 To allow people to access the site via your hostname you need an A record:
 
 ```
-A loomio.example.com 123.123.123.123
+A loomio.example.com, 123.123.123.123
+```
+
+You also need to setup a CNAME record for the live update service
+
+```
+CNAME faye.loomio.example.com, loomio.example.com
 ```
 
 Loomio supports "Reply by email" and to enable this you need an MX record so mail servers know where to direct these emails.
@@ -63,33 +70,40 @@ The commands below assume your working directory is this repo, on your server.
 
 ### Setup a swapfile (optional)
 There are some simple scripts within this repo to help you configure your server.
+
 This script will create and mount a 4GB swapfile. If you have less than 2GB RAM on your server then this step is required.
 
 ```sh
 ./scripts/create_swapfile
 ```
 
-### Create your Loomio ENV file
-This step creates an `env` file configured for your hostname. It also creates directories on the host to hold user data.
+### Create your ENV files
+This script creates `env` and `faye_env` files configured for you. It also creates directories on the host to hold user data.
 
-Remember to change `loomio.example.com` to your hostname for the loomio instance, and give your contact email address for letsencrypt, so you can recover your ssl keys if you need them.
+When you run this, remember to change `loomio.example.com` to your hostname, and give your contact email address, so you can recover your SSL keys later if required.
+
 ```sh
 ./scripts/create_env loomio.example.com you@contact.email
 ```
 
-Now that it exists, have a look inside the file, it's where all your Loomio settings are kept.
+Now have a look inside the files:
 
 ```sh
 cat env
 ```
 
-Note: If you change your `env` after you've started the services you need to run `docker-compose down` to remove the existing containers.
+and
+
+```sh
+cat faye_env
+```
+
 
 ### Setup SMTP
 
-Loomio is broken if it cannot send email. In this step you need to edit your `env` file and configure the SMTP settings to get outbound email working.
+Loomio is technically broken if it cannot send email. In this step you need to edit your `env` file and configure the SMTP settings to get outbound email working.
 
-So you'll need an SMTP server. If you already have one, that's great, you know what to do. For everyone else here are some options to consider:
+So, you'll need an SMTP server. If you already have one, that's great, you know what to do. For everyone else here are some options to consider:
 
 - For setups that will send less than 99 emails a day [use smtp.google.com](https://www.digitalocean.com/community/tutorials/how-to-use-google-s-smtp-server) for free.
 
@@ -104,18 +118,6 @@ You might need to add an SPF record to indicate that the SMTP can send mail for 
 ```sh
 nano env
 ```
-
-## Issue an SSL certificate for your hostname:
-Thanks to [Let's Encrypt](https://letsencrypt.org/), it's easy to obtain an SSL certificate and encrypt traffic to and from your Loomio instance. Paste this command into your terminal and follow the onscreen instructions.
-
-```sh
-docker run -it --rm -p 443:443 -p 80:80 --name letsencrypt \
-            -v "/root/loomio-deploy/certificates/:/etc/letsencrypt" \
-            -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
-            quay.io/letsencrypt/letsencrypt:latest auth
-```
-
-If you have a CA issued certificate or want to generate your own certificate, that's supported too. Just copy your full chain certificate file and the private key file into the `certificates` directory and update the values of `LOOMIO_SSL_KEY` and `LOOMIO_SSL_CERT` in your `env` file.
 
 ### Initialize the database
 This command initializes a new database for your Loomio instance to use.
@@ -163,7 +165,10 @@ todo:
 
 ## If something goes wrong
 confirm `env` settings are correct.
+
 After you change your `env` file you need to restart the system:
+
+Note: If you change your `env` after you've started the services you need to run `docker-compose down` to remove the existing containers.
 
 ```sh
 docker-compose restart

@@ -20,10 +20,10 @@ SMTP_PORT=465
 SMTP_USERNAME=smtpusername
 SMTP_PASSWORD=smtppassword
 
-FAYE_URL=https://REPLACE_WITH_HOSTNAME/faye
+FAYE_URL=https://faye.REPLACE_WITH_HOSTNAME/faye
 REPLY_HOSTNAME=REPLACE_WITH_HOSTNAME
 
 # helper bot is the account which welcomes people to their groups.
-HELPER_BOT_EMAIL=noreply@REPLACE_WITH_HOSTNAME
+HELPER_BOT_EMAIL=no-reply@REPLACE_WITH_HOSTNAME
 RAILS_ENV=production
 FORCE_SSL=1

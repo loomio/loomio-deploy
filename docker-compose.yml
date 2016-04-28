@@ -17,11 +17,13 @@ nginx:
     - 80:80
     - 443:443
   links:
-    - web
+    - loomio
     - faye
 
-web:
+loomio:
   image: loomio/loomio
+  expose:
+   - 3000
   env_file: ./env
   links:
     - db
@@ -34,7 +36,7 @@ worker:
   image: loomio/loomio
   env_file: ./env
   links:
-    - db
+    - db:db
   environment:
     - DATABASE_URL=postgresql://postgres:password@db/loomio_production
   volumes:
@@ -54,9 +56,9 @@ mailin:
   ports:
     - 25:25
   links:
-    - web
+    - loomio
   environment:
-    - WEBHOOK_URL=http://web:3000/email_processor/
+    - WEBHOOK_URL=http://loomio:3000/email_processor/
 
 faye:
   build: faye/.

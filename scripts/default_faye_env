@@ -1,0 +1,6 @@
+# this is to tell nginx that you want requests for this hostname to come to the app
+VIRTUAL_HOST=faye.REPLACE_WITH_HOSTNAME
+
+# this is to configure letsencrypt to automatically issue and renew your hostname
+LETSENCRYPT_HOST=faye.REPLACE_WITH_HOSTNAME
+LETSENCRYPT_EMAIL=REPLACE_WITH_CONTACT_EMAIL
