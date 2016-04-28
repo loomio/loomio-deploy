@@ -36,7 +36,7 @@ MX loomio.example.com, loomio.example.com, priority 0
 To login to the server, open a terminal window and type:
 
 ```sh
-ssh root@loomio.example.com
+ssh -A root@loomio.example.com
 ```
 
 ### Install docker and docker-compose
@@ -72,9 +72,9 @@ This script will create and mount a 4GB swapfile. If you have less than 2GB RAM 
 ### Create your Loomio ENV file
 This step creates an `env` file configured for your hostname. It also creates directories on the host to hold user data.
 
-Remember to change `loomio.example.com` to your hostname!
+Remember to change `loomio.example.com` to your hostname for the loomio instance, and give your contact email address for letsencrypt, so you can recover your ssl keys if you need them.
 ```sh
-./scripts/create_env loomio.example.com
+./scripts/create_env loomio.example.com you@contact.email
 ```
 
 Now that it exists, have a look inside the file, it's where all your Loomio settings are kept.
@@ -82,6 +82,8 @@ Now that it exists, have a look inside the file, it's where all your Loomio sett
 ```sh
 cat env
 ```
+
+Note: If you change your `env` after you've started the services you need to run `docker-compose down` to remove the existing containers.
 
 ### Setup SMTP
 
@@ -97,6 +99,8 @@ So you'll need an SMTP server. If you already have one, that's great, you know w
 
 Edit the `env` file and enter the right SMTP settings for your setup.
 
+You might need to add an SPF record to indicate that the SMTP can send mail for your domain.
+
 ```sh
 nano env
 ```
@@ -110,6 +114,8 @@ docker run -it --rm -p 443:443 -p 80:80 --name letsencrypt \
             -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
             quay.io/letsencrypt/letsencrypt:latest auth
 ```
+
+If you have a CA issued certificate or want to generate your own certificate, that's supported too. Just copy your full chain certificate file and the private key file into the `certificates` directory and update the values of `LOOMIO_SSL_KEY` and `LOOMIO_SSL_CERT` in your `env` file.
 
 ### Initialize the database
 This command initializes a new database for your Loomio instance to use.
@@ -139,18 +145,16 @@ docker-compose up -d
 ```
 
 ## Try it out
-visit your hostname in your browser and hopefully you'll see a login screen.
+visit your hostname in your browser. something like `https://loomio.example.com`.
+You should see a login screen, but instead sign up at `https://loomio.example.com/users/sign_up`
 
-visit /users/sign_up and create a user account.
+## Test the functionality
+Test that email is working by visiting `https://loomio.example.com/users/password/new` and get a password reset link sent to you.
 
-testing it all
-start a group with /start_group
-you should get an email
-login, create two windows and test live update
-invite a fake email to your group, login as that user and start a discussion, you should get a notification email
-login with two tabs on the same page, you should see live update work.
+Test that live update works with two tabs on the same discussion, write a comment in one, and it should appear in the other.
+Test that you can upload files into a thread.
+Test that you can reply by email.
 test that proposal closing soon works.
-test file upload.
 
 todo:
  remove start_group path.
@@ -192,3 +196,6 @@ docker exec -t -i loomiodeploy_app_1 bundle exec rails console
 ```
 
 *Need some help?* Check out the [Installing Loomio group](https://www.loomio.org/g/C7I2YAPN/loomio-community-installing-loomio).
+
+## Next steps for this repo
+script to enable automatic security updates, ufw, secure ubuntu to good enough standard.

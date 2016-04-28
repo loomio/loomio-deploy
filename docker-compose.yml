@@ -1,11 +1,29 @@
+letsencrypt:
+  image: jrcs/letsencrypt-nginx-proxy-companion
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    - ./certificates:/etc/nginx/certs:rw
+  volumes_from:
+    - nginx
+
+nginx:
+  image: jwilder/nginx-proxy
+  volumes:
+    - /var/run/docker.sock:/tmp/docker.sock:ro
+    - ./certificates:/etc/nginx/certs:ro
+    - ./nginx/vhost.d:/etc/nginx/vhost.d
+    - ./nginx/html:/usr/share/nginx/html
+  ports:
+    - 80:80
+    - 443:443
+  links:
+    - web
+
 web:
   image: loomio/loomio
   env_file: ./env
-  ports:
-    - 80:3000
-    - 443:9292
   links:
-    - db:db
+    - db
   environment:
     - DATABASE_URL=postgresql://postgres:password@db/loomio_production
   volumes:
@@ -16,7 +34,7 @@ worker:
   image: loomio/loomio
   env_file: ./env
   links:
-    - db:db
+    - db
   environment:
     - DATABASE_URL=postgresql://postgres:password@db/loomio_production
   volumes:
@@ -35,9 +53,9 @@ db:
 mailin:
   image: loomio/mailin-docker
   ports:
-    - "25:25"
+    - 25:25
   links:
-    - web:web
+    - web
   environment:
     - WEBHOOK_URL=http://web:3000/email_processor/
 
@@ -45,6 +63,6 @@ faye:
   image: loomio/loomio-faye
   env_file: ./env
   ports:
-    - "4443:4443"
+    - 4443:4443
   volumes:
     - ./certificates:/certificates
