@@ -60,4 +60,4 @@ mailin:
 
 faye:
   build: faye/.
-  env_file: ./env
+  env_file: ./faye_env
