@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+#ruby '2.1.5'
+
+gem "private_pub", github: 'loomio/private_pub'
+gem 'thin'

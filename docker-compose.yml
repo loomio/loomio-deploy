@@ -18,6 +18,7 @@ nginx:
     - 443:443
   links:
     - web
+    - faye
 
 web:
   image: loomio/loomio
@@ -28,7 +29,6 @@ web:
     - DATABASE_URL=postgresql://postgres:password@db/loomio_production
   volumes:
     - ./attachments:/loomio/public/system/attachments
-    - ./certificates:/certificates
 
 worker:
   image: loomio/loomio
@@ -39,7 +39,6 @@ worker:
     - DATABASE_URL=postgresql://postgres:password@db/loomio_production
   volumes:
     - ./attachments:/loomio/public/system/attachments
-    - ./certificates:/certificates
   command: "bundle exec rake jobs:work"
 
 db:
@@ -60,9 +59,5 @@ mailin:
     - WEBHOOK_URL=http://web:3000/email_processor/
 
 faye:
-  image: loomio/loomio-faye
+  build: faye/.
   env_file: ./env
-  ports:
-    - 4443:4443
-  volumes:
-    - ./certificates:/certificates
