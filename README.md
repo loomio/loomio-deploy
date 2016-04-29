@@ -1,8 +1,9 @@
-# loomio-deploy
+# Deploy your own Loomio
 
 This repo contains a basic docker-compose configuration for running Loomio on your own server.
 
-This README is a guide to setting up Loomio using this docker-compose based system using a single host.
+It assumes you want to run everything on a single host. It automatically issues
+an SSL certificate for you via the amazing [letsencrypt.org](https://letsencrypt.org/).
 
 ## What you'll need
 * Root access to a server, on a public IP address, running a default configuration of Ubuntu 14.04 x64.
@@ -123,7 +124,7 @@ nano env
 This command initializes a new database for your Loomio instance to use.
 
 ```
-docker-compose run web rake db:setup
+docker-compose run loomio rake db:setup
 ```
 
 ### Install crontab
@@ -146,6 +147,12 @@ This command starts the database, application, reply-by-email, and live-update s
 docker-compose up -d
 ```
 
+You'll want to see the logs as it all starts, run the following command:
+
+```
+docker-compose logs
+```
+
 ## Try it out
 visit your hostname in your browser. something like `https://loomio.example.com`.
 You should see a login screen, but instead sign up at `https://loomio.example.com/users/sign_up`
@@ -158,49 +165,24 @@ Test that you can upload files into a thread.
 Test that you can reply by email.
 test that proposal closing soon works.
 
-todo:
- remove start_group path.
-* confirm mailin, pubsub work
-* force ssl
-
 ## If something goes wrong
 confirm `env` settings are correct.
 
 After you change your `env` file you need to restart the system:
-
-Note: If you change your `env` after you've started the services you need to run `docker-compose down` to remove the existing containers.
-
-```sh
-docker-compose restart
-```
-
-Other need to know docker commands include:
-* `docker ps` lists running containers.
-* `docker ps -a` lists all containers.
-* `docker logs <container>` to find out what a container is doing.
-* `docker stop <container_id or name>` will stop a container
-* `docker start <container_id or name>` will start a container
-* `docker restart <container_id or name>` will restart a container
-* `docker rm <container_id or name>` will delete a container
-* `docker pull loomio/loomio:latest` pulls the latest version of loomio
-* `docker help <command>` will help you understand commands
+run `docker-compose down` then `docker-compose up -d`
 
 To update Loomio to the latest image you'll need to stop, rm, pull, and run again.
 
 ```sh
-docker stop loomio
-docker rm loomio
-docker pull loomio/loomio
-docker run
+docker-compose down
+docker-compose pull
+docker-compose up -d
 ```
 
-To login to your running rails app
+To login to your running rails app console:
 
 ```sh
-docker exec -t -i loomiodeploy_app_1 bundle exec rails console
+docker exec loomiodeploy_worker_1 bundle exec rails console
 ```
 
-*Need some help?* Check out the [Installing Loomio group](https://www.loomio.org/g/C7I2YAPN/loomio-community-installing-loomio).
-
-## Next steps for this repo
-script to enable automatic security updates, ufw, secure ubuntu to good enough standard.
+*Need some help?* Visit the [Installing Loomio group](https://www.loomio.org/g/C7I2YAPN/loomio-community-installing-loomio).

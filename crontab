@@ -1,13 +1,10 @@
 # minute (0-59), hour (0-23, 0 = midnight), day (1-31), month (1-12), weekday (0-6, 0 = Sunday), command
 
 # every hour at the beginning of the hour
-0 * * * *  root docker exec -t loomio bundle exec rake loomio:send_proposal_closing_soon
+0 * * * *  root docker exec loomiodeploy_worker_1 bundle exec rake loomio:send_proposal_closing_soon >> /cronoutput
 
 # Every 5 minutes
-0 */5 * * *  root docker exec -t loomio bundle exec rake loomio:close_lapsed_motions
+0 */5 * * *  root docker exec loomiodeploy_worker_1 bundle exec rake loomio:close_lapsed_motions >> /cronoutput
 
 # Hourly
-0 */5 * * * root docker exec -t loomio bundle exec rake loomio:send_missed_yesterday_email
-
-# renew ssl certificates
-0 0 0 * * * root docker run -it --rm -p 443:443 -p 80:80 --name letsencrypt -v \"/loomio/config/letsencrypt:/etc/letsencrypt\" -v "/var/lib/letsencrypt:/var/lib/letsencrypt" quay.io/letsencrypt/letsencrypt:latest renew
+0 */5 * * * root docker exec loomiodeploy_worker_1 bundle exec rake loomio:send_missed_yesterday_email >> /cronoutput
