@@ -30,17 +30,17 @@ loomio:
   environment:
     - DATABASE_URL=postgresql://postgres:password@db/loomio_production
   volumes:
-    - ./attachments:/loomio/public/system/attachments
+    - ./uploads:/loomio/public/system
 
 worker:
   image: loomio/loomio
   env_file: ./env
   links:
-    - db:db
+    - db
   environment:
     - DATABASE_URL=postgresql://postgres:password@db/loomio_production
   volumes:
-    - ./attachments:/loomio/public/system/attachments
+    - ./uploads:/loomio/public/system
   command: "bundle exec rake jobs:work"
 
 db:
