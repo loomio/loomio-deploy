@@ -190,6 +190,12 @@ docker-compose run loomio rake db:migrate
 docker-compose up -d
 ```
 
+From time to time, or if you are running out of disk space (check `/var/lib/docker`):
+
+```sh
+docker rmi $(docker images -f "dangling=true" -q)
+```
+
 To login to your running rails app console:
 
 ```sh
