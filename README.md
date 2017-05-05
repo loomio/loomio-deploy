@@ -153,6 +153,12 @@ You'll want to see the logs as it all starts, run the following command:
 docker-compose logs
 ```
 
+You might like to keep an additional console open by your side to watch for potential errors or warnings:
+
+```
+docker-compose logs -f
+```
+
 ## Try it out
 visit your hostname in your browser. something like `https://loomio.example.com`.
 You should see a login screen, but instead sign up at `https://loomio.example.com/users/sign_up`
@@ -166,10 +172,14 @@ Test that you can reply by email.
 test that proposal closing soon works.
 
 ## If something goes wrong
-confirm `env` settings are correct.
+Confirm `env` and `faye-env` settings are correct.
 
-After you change your `env` file you need to restart the system:
-run `docker-compose down` then `docker-compose up -d`
+After you change your `env` or `faye-env` files you need to restart the system:
+
+```sh
+docker-compose down
+docker-compose up -d
+```
 
 To update Loomio to the latest image you'll need to stop, rm, pull, and run again.
 
