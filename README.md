@@ -208,4 +208,25 @@ A PostgreSQL shell to inspect the database:
 docker exec -ti loomiodeploy_db_1 su - postgres -c 'psql loomio_production'
 ```
 
+
+## Building a backup policy
+Most of the environment we have set up so far can be considered disposable, as it can be rebuilt from scratch in a few minutes.
+
+Things you want to consider when designing a proper backup policy:
+
+* `loomio-deploy/uploads`
+* `loomio-deploy/env`
+* `loomio-deploy/faye-env`
+
+And a database dump:
+
+```sh
+docker exec -ti loomiodeploy_db_1 su - postgres -c 'pg_dump loomio_production' \
+  | xz \
+  > $(date +%Y-%m-%d_%H:%M).pg_dump.xz
+```
+
+Be sure you exclude `loomio-deploy/pgdata` — all you need from the database is in the dump.
+
+
 *Need some help?* Visit the [Installing Loomio group](https://www.loomio.org/g/C7I2YAPN/loomio-community-installing-loomio).
