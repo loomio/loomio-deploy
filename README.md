@@ -181,11 +181,12 @@ docker-compose down
 docker-compose up -d
 ```
 
-To update Loomio to the latest image you'll need to stop, rm, pull, and run again.
+To update Loomio to the latest image you'll need to stop, rm, pull, apply potential changes to the database schema, and run again.
 
 ```sh
 docker-compose down
 docker-compose pull
+docker-compose run loomio rake db:migrate
 docker-compose up -d
 ```
 
@@ -193,6 +194,12 @@ To login to your running rails app console:
 
 ```sh
 docker exec loomiodeploy_worker_1 bundle exec rails console
+```
+
+A PostgreSQL shell to inspect the database:
+
+```sh
+docker exec -ti loomiodeploy_db_1 su - postgres -c 'psql loomio_production'
 ```
 
 *Need some help?* Visit the [Installing Loomio group](https://www.loomio.org/g/C7I2YAPN/loomio-community-installing-loomio).
