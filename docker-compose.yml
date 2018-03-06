@@ -24,7 +24,7 @@ nginx:
 
 loomio:
   restart: always
-  image: loomio/loomio:stable
+  image: ${LOOMIO_CONTAINER_IMAGE}:${LOOMIO_CONTAINER_TAG}
   expose:
     - 3000
   env_file: ./env
@@ -40,7 +40,7 @@ loomio:
 
 worker:
   restart: always
-  image: loomio/loomio:stable
+  image: ${LOOMIO_CONTAINER_IMAGE}:${LOOMIO_CONTAINER_TAG}
   env_file: ./env
   links:
     - db
@@ -64,7 +64,7 @@ db:
 
 mailin:
   restart: always
-  image: loomio/mailin-docker
+  image: ${MAILIN_CONTAINER_IMAGE}:${MAILIN_CONTAINER_TAG}
   ports:
     - "25:25"
   links:
