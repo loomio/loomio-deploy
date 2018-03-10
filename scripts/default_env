@@ -24,7 +24,6 @@ SMTP_PORT=465
 SMTP_USERNAME=smtpusername
 SMTP_PASSWORD=smtppassword
 
-FAYE_URL=https://faye.REPLACE_WITH_HOSTNAME/faye
 REPLY_HOSTNAME=REPLACE_WITH_HOSTNAME
 
 # helper bot is the account which welcomes people to their groups.
