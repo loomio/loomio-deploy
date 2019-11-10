@@ -69,6 +69,7 @@ db:
     - ./pgdumps:/pgdumps
   environment:
    - POSTGRES_PASSWORD=password
+   - POSTGRES_DB=loomio_production
    - PGDATA=/pgdata
 
 redis:

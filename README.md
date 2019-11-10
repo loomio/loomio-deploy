@@ -1,6 +1,6 @@
 # Deploy your own Loomio
 
-This repo contains a docker-compose configuration for running Loomio on your own server. 
+This repo contains a docker-compose configuration for running Loomio on your own server.
 
 If you just want a local install of Loomio for development, see [Setting up a Loomio development environment](https://help.loomio.org/en/dev_manual/setup_dev_environment/).
 
@@ -107,9 +107,9 @@ __My personal request is that you do not disable usage reporting__. I have worke
 
 ### Setup SMTP
 
-You need to bring your own SMTP server for Loomio to send emails. 
+You need to bring your own SMTP server for Loomio to send emails.
 
-If you already have and SMTP, that's great, put the settings into the `env` file. 
+If you already have and SMTP, that's great, put the settings into the `env` file.
 
 For everyone else here are some options to consider:
 
@@ -130,7 +130,6 @@ This command initializes a new database for your Loomio instance to use.
 
 ```
 docker-compose up -d db
-docker exec -ti loomio-db su - postgres -c 'createdb loomio_production'
 docker-compose run app rake db:setup
 ```
 
