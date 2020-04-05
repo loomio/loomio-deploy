@@ -227,3 +227,10 @@ You may wish to add a crontab entry like this. I'll leave it up to you to config
 0 0 * * *  ~/loomio-deploy/scripts/create_backup ~/loomio-deploy > ~/backup.log 2>&1; s3cmd put ~/loomio-deploy/backups/* s3://somebucket/$(date +\%F)/ > ~/s3cmd.log 2>&1
 
 ```
+
+# Integrations
+
+## Login via Nextcloud
+Loomio must be registered in nextcloud as oauth 2.0 client using https://loomio.example.com/nextcloud/authorize as redirection URL.
+
+In loomio the NEXTCLOUD_HOST environment variable must point to the nextcloud instance, for example https://nextcloud.example.com. NEXTCLOUD_APP_KEY and NEXTCLOUD_APP_SECRET must be set to the client identifier and secret set by nextcloud.
