@@ -61,6 +61,13 @@ USE_RACK_ATTACK=1
 # Enable search engines to index public content
 # ALLOW_ROBOTS=1
 
+# Uncomment to enable SAML SSO
+# SAML_APP_KEY=1 # just a flag, keep value as 1
+# SAML_IDP_METADATA_URL=https://saml-metadata-url-provided-by-your-SSO-provider.com/12356
+#
+# Disable login via email (usually when you have enabled SSO of some kind)
+# FEATURES_DISABLE_EMAIL_LOGIN=1
+
 # oauth providers, to let your users login using external accounts
 # FACEBOOK_APP_KEY=REPLACE
 # FACEBOOK_APP_SECRET=REPLACE
