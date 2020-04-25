@@ -4,7 +4,7 @@ This repo contains a docker-compose configuration for running Loomio on your own
 
 If you just want a local install of Loomio for development, see [Setting up a Loomio development environment](https://help.loomio.org/en/dev_manual/setup_dev_environment/).
 
-It runs mutlitple services on a single host with docker and docker-compose. It automatically issues
+It runs multiple services on a single host with docker and docker-compose. It automatically issues
 an SSL certificate for you via the amazing [letsencrypt.org](https://letsencrypt.org/).
 
 ## What you'll need
@@ -227,3 +227,10 @@ You may wish to add a crontab entry like this. I'll leave it up to you to config
 0 0 * * *  ~/loomio-deploy/scripts/create_backup ~/loomio-deploy > ~/backup.log 2>&1; s3cmd put ~/loomio-deploy/backups/* s3://somebucket/$(date +\%F)/ > ~/s3cmd.log 2>&1
 
 ```
+
+# Integrations
+
+## Login via Nextcloud
+Loomio must be registered in nextcloud as oauth 2.0 client using https://loomio.example.com/nextcloud/authorize as redirection URL.
+
+In loomio the NEXTCLOUD_HOST environment variable must point to the nextcloud instance, for example https://nextcloud.example.com. NEXTCLOUD_APP_KEY and NEXTCLOUD_APP_SECRET must be set to the client identifier and secret set by nextcloud.
