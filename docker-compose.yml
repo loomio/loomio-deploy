@@ -1,93 +1,109 @@
-letsencrypt:
-  container_name: loomio-letsencrypt
-  restart: always
-  image: jrcs/letsencrypt-nginx-proxy-companion
-  volumes:
-    - /var/run/docker.sock:/var/run/docker.sock:ro
-    - ./certificates:/etc/nginx/certs:rw
-  volumes_from:
-    - nginx
+version: '3'
 
-nginx:
-  container_name: loomio-nginx
-  restart: always
-  image: jwilder/nginx-proxy
-  volumes:
-    - /var/run/docker.sock:/tmp/docker.sock:ro
-    - ./certificates:/etc/nginx/certs:ro
-    - ./nginx/vhost.d:/etc/nginx/vhost.d
-    - ./nginx/conf.d/custom.conf:/etc/nginx/conf.d/custom.conf:ro
-    - ./nginx/html:/usr/share/nginx/html
-  ports:
-    - 80:80
-    - 443:443
-  links:
-    - app
+services:
+  nginx:
+    container_name: loomio-nginx
+    image: jwilder/nginx-proxy:alpine
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true"
+    networks:
+      - main
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:rw
+      - ./nginx/vhost.d:/etc/nginx/vhost.d:rw
+      - ./nginx/html:/usr/share/nginx/html:rw
+      - ./nginx/certs:/etc/nginx/certs:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: unless-stopped
 
-app:
-  container_name: loomio-app
-  restart: always
-  image: ${LOOMIO_CONTAINER_IMAGE}:${LOOMIO_CONTAINER_TAG}
-  expose:
-    - 3000
-  env_file: ./env
-  links:
-    - db
-    - redis
-  environment:
-    - DATABASE_URL=postgresql://postgres:password@db/loomio_production
-    - REDIS_URL=redis://redis:6379
-  volumes:
-    - ./client:/loomio/public/client
-    - ./uploads:/loomio/public/system
-    - ./storage:/loomio/storage
-    - ./files:/loomio/public/files
-    - ./plugins:/loomio/plugins/docker
-    - ./import:/import
+  letsencrypt:
+    container_name: loomio-letsencrypt
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    networks:
+      - main
+    depends_on:
+      - nginx
+    volumes:
+      - ./nginx/certs:/etc/nginx/certs:rw
+      - ./nginx/vhost.d:/etc/nginx/vhost.d:rw
+      - ./nginx/html:/usr/share/nginx/html:rw
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
 
-worker:
-  container_name: loomio-worker
-  restart: always
-  image: ${LOOMIO_CONTAINER_IMAGE}:${LOOMIO_CONTAINER_TAG}
-  env_file: ./env
-  links:
-    - db
-    - redis
-  environment:
-    - DATABASE_URL=postgresql://postgres:password@db/loomio_production
-    - REDIS_URL=redis://redis:6379
-    - TASK=worker
-  volumes:
-    - ./client:/loomio/public/client
-    - ./uploads:/loomio/public/system
-    - ./storage:/loomio/storage
-    - ./files:/loomio/public/files
-    - ./plugins:/loomio/plugins/docker
+  app:
+    container_name: loomio-app
+    image: ${LOOMIO_CONTAINER_IMAGE}:${LOOMIO_CONTAINER_TAG}
+    restart: unless-stopped
+    expose:
+      - 3000
+    env_file: ./env
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db/loomio_production
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - ./client:/loomio/public/client
+      - ./uploads:/loomio/public/system
+      - ./storage:/loomio/storage
+      - ./files:/loomio/public/files
+      - ./plugins:/loomio/plugins/docker
+      - ./import:/import
+    networks:
+      - main
 
-db:
-  container_name: loomio-db
-  restart: always
-  image: postgres:${POSTGRES_CONTAINER_TAG}
-  volumes:
-    - ./pgdata:/pgdata
-    - ./pgdumps:/pgdumps
-  environment:
-   - POSTGRES_PASSWORD=password
-   - POSTGRES_DB=loomio_production
-   - PGDATA=/pgdata
+  worker:
+    container_name: loomio-worker
+    image: ${LOOMIO_CONTAINER_IMAGE}:${LOOMIO_CONTAINER_TAG}
+    restart: always
+    networks:
+      - main
+    env_file: ./env
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db/loomio_production
+      - REDIS_URL=redis://redis:6379
+      - TASK=worker
+    volumes:
+      - ./client:/loomio/public/client
+      - ./uploads:/loomio/public/system
+      - ./storage:/loomio/storage
+      - ./files:/loomio/public/files
+      - ./plugins:/loomio/plugins/docker
 
-redis:
-  container_name: loomio-redis
-  restart: always
-  image: redis:5.0
+  db:
+    container_name: loomio-db
+    image: postgres:${POSTGRES_CONTAINER_TAG}
+    restart: unless-stopped
+    networks:
+      - main
+    volumes:
+      - ./pgdata:/pgdata
+      - ./pgdumps:/pgdumps
+    environment:
+     - POSTGRES_PASSWORD=password
+     - POSTGRES_DB=loomio_production
+     - PGDATA=/pgdata
 
-mailin:
-  container_name: loomio-mailin
-  restart: always
-  image: ${MAILIN_CONTAINER_IMAGE}:${MAILIN_CONTAINER_TAG}
-  ports:
-    - "25:25"
-  links:
-    - app
-  environment:
-    - WEBHOOK_URL=http://app:3000/email_processor/
+  redis:
+    container_name: loomio-redis
+    image: redis:5.0
+    restart: unless-stopped
+    networks:
+      - main
+
+  mailin:
+    container_name: loomio-mailin
+    image: ${MAILIN_CONTAINER_IMAGE}:${MAILIN_CONTAINER_TAG}
+    restart: unless-stopped
+    networks:
+      - main
+    ports:
+      - "25:25"
+    environment:
+      - WEBHOOK_URL=http://app:3000/email_processor/
+
+networks:
+  main:
