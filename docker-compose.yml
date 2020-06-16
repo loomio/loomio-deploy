@@ -54,6 +54,8 @@ services:
       - ./import:/import
     networks:
       - main
+    depends_on:
+      - db
 
   worker:
     container_name: loomio-worker
