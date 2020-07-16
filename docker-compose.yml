@@ -70,7 +70,6 @@ services:
       - REDIS_URL=redis://redis:6379
       - TASK=worker
     volumes:
-      - ./client:/loomio/public/client
       - ./uploads:/loomio/public/system
       - ./storage:/loomio/storage
       - ./files:/loomio/public/files
