@@ -103,7 +103,7 @@ If you wish to disable this reporting function, add the following line to your `
 DISABLE_USAGE_REPORTING=1
 ```
 
-__My personal request is that you do not disable usage reporting__. I have worked full time on this project for more than 7 years. I ask that you leave this simple usage reporting on, so that I can be encouraged by knowing how much Loomio usage is going on.
+__My request to you, is that you do not disable usage reporting__. It's really encouraging to see other active instances of Loomio, and the information can help us report our impact as a social enterprise and business.
 
 ### Setup SMTP
 
