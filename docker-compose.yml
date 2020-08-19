@@ -112,6 +112,10 @@ services:
     networks:
       - main
     env_file: ./channels_env
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
 
 networks:
   main:
