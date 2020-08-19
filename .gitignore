@@ -11,3 +11,4 @@ plugins
 .DS_store
 *.pg_dump
 pgdumps
+channels_env

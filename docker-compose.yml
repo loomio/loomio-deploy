@@ -105,5 +105,13 @@ services:
     environment:
       - WEBHOOK_URL=http://app:3000/email_processor/
 
+  channels:
+    container_name: loomio-channels
+    image: loomio/loomio_channel_server
+    restart: unless-stopped
+    networks:
+      - main
+    env_file: ./channels_env
+
 networks:
   main:
