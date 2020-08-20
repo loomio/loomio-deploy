@@ -46,7 +46,6 @@ services:
       - DATABASE_URL=postgresql://postgres:password@db/loomio_production
       - REDIS_URL=redis://redis:6379
     volumes:
-      - ./client:/loomio/public/client
       - ./uploads:/loomio/public/system
       - ./storage:/loomio/storage
       - ./files:/loomio/public/files
@@ -54,6 +53,9 @@ services:
       - ./import:/import
     networks:
       - main
+    depends_on:
+      - db
+      - redis
 
   worker:
     container_name: loomio-worker
