@@ -28,6 +28,8 @@ SMTP_USE_SSL=1
 
 REPLY_HOSTNAME=REPLACE_WITH_HOSTNAME
 
+CHANNELS_URI=wss://channels.REPLACE_WITH_HOSTNAME
+
 # helper bot is the account which welcomes people to their groups.
 HELPER_BOT_EMAIL=no-reply@REPLACE_WITH_HOSTNAME
 RAILS_ENV=production
