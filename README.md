@@ -159,7 +159,7 @@ This command starts the database, application, reply-by-email, and live-update s
 docker-compose up -d
 ```
 
-Before the rails server is started, the javascript client is built, which can take up to 5 minutes. This only happens the first time you start a new Loomio version - restarts should be faster.
+Give it a minute to start, then visit your URL while crossing your fingers!
 
 If you visit the url with your browser and the rails server is not yet running, but nginx is, you'll see a "503 bad gateway" error message.
 
