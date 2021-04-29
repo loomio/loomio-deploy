@@ -221,6 +221,11 @@ docker exec -ti loomio-db su - postgres -c 'psql loomio_production'
 ```
 
 ## Backups
+Dump the database with:
+```
+docker exec -t loomio-db pg_dump loomio_production -c -U postgres -Fc > loomio_production_$(date +%Y-%m-%d_%H_%M_%S).dump
+```
+
 We have provided a simple backup script to create a tgz file with a database dump and all the user uploads and system config.
 
 ```
