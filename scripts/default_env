@@ -25,7 +25,8 @@ SMTP_SERVER=smtp.example.com
 SMTP_PORT=465
 SMTP_USERNAME=smtpusername
 SMTP_PASSWORD=smtppassword
-SMTP_USE_SSL=1
+SMTP_USE_SSL=1 
+# to disable SSL comment out line rather than changing to 0
 
 REPLY_HOSTNAME=REPLACE_WITH_HOSTNAME
 
@@ -94,12 +95,3 @@ USE_RACK_ATTACK=1
 # THEME_ACCENT_COLOR=rgb(0,188,212)
 # THEME_TEXT_ON_PRIMARY_COLOR=rgb(255,255,255)
 # THEME_TEXT_ON_ACCENT_COLOR=rgb(255,255,255)
-
-# select a palette from material: https://material.io/guidelines/style/color.html#color-color-palette
-# or generate your own theme at http://mcg.mbitson.com/
-# THEME_PRIMARY_PALETTE=custom_primary
-# THEME_ACCENT_PALETTE=custom_accent
-# THEME_PRIMARY_PALETTE_CONFIG={"default": "500"}
-# THEME_ACCENT_PALETTE_CONFIG={"default": "500", "hue-1": "400", "hue-2": "300", "hue-3": "200"}
-# THEME_CUSTOM_PRIMARY_PALETTE={ "50": "f2e0e5", "100": "deb3bf", "200": "c98094", "300": "b34d69", "400": "a22648", "500": "920028", "600": "8a0024", "700": "7f001e", "800": "750018", "900": "63000f", "A100": "ff939b", "A200": "ff606c", "A400": "ff2d3c", "A700": "ff1425", "contrastDefaultColor": "light", "contrastDarkColors": [ "50", "100", "200", "A100", "A200" ], "contrastLightColors": [ "300", "400", "500", "600", "700", "800", "900", "A400", "A700" ] }
-# THEME_CUSTOM_ACCENT_PALETTE={ "50": "e9f4fb", "100": "c8e4f6", "200": "a3d3f0", "300": "7ec1ea", "400": "62b3e6", "500": "46a6e1", "600": "3f9edd", "700": "3795d9", "800": "2f8bd5", "900": "207bcd", "A100": "ffffff", "A200": "d2e8ff", "A400": "9fcfff", "A700": "85c2ff", "contrastDefaultColor": "light", "contrastDarkColors": [ "50", "100", "200", "300", "400", "500", "600", "700", "A100", "A200", "A400", "A700" ], "contrastLightColors": [ "800", "900" ] }

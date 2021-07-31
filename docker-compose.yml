@@ -87,7 +87,29 @@ services:
      - POSTGRES_PASSWORD=password
      - POSTGRES_DB=loomio_production
      - PGDATA=/pgdata
-
+     
+  pgbackups:
+    image: prodrigestivill/postgres-backup-local
+    restart: always
+    user: postgres:postgres
+    volumes:
+      - ./pgdumps:/backups
+    links:
+      - db
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=loomio_production
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_EXTRA_OPTS=-Z6 --schema=public --blobs
+      - SCHEDULE=@daily
+      - BACKUP_KEEP_DAYS=7
+      - BACKUP_KEEP_WEEKS=1
+      - BACKUP_KEEP_MONTHS=1
+      - HEALTHCHECK_PORT=8080
+      
   redis:
     container_name: loomio-redis
     image: redis:5.0

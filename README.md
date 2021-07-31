@@ -33,6 +33,12 @@ Loomio supports "Reply by email" and to enable this you need an MX record so mai
 MX loomio.example.com, loomio.example.com, priority 0
 ```
 
+Additionally, create a CNAME record that points `channels.loomio.example.com` to `loomio.example.com`. The records would look like this:
+
+```
+channels.loomio.example.com.    600    IN    CNAME    loomio.example.com.
+loomio.example.com.    600    IN    A    123.123.123.123
+```
 
 ## Configure the server
 
@@ -153,7 +159,7 @@ This command starts the database, application, reply-by-email, and live-update s
 docker-compose up -d
 ```
 
-Before the rails server is started, the javascript client is built, which can take up to 5 minutes. This only happens the first time you start a new Loomio version - restarts should be faster.
+Give it a minute to start, then visit your URL while crossing your fingers!
 
 If you visit the url with your browser and the rails server is not yet running, but nginx is, you'll see a "503 bad gateway" error message.
 
@@ -215,18 +221,8 @@ docker exec -ti loomio-db su - postgres -c 'psql loomio_production'
 ```
 
 ## Backups
-We have provided a simple backup script to create a tgz file with a database dump and all the user uploads and system config.
-
-```
-scripts/create_backup .
-```
-Your backup will be in loomio-deploy/backups/
-
-You may wish to add a crontab entry like this. I'll leave it up to you to configure s3cmd and your aws bucket.
-```
-0 0 * * *  ~/loomio-deploy/scripts/create_backup ~/loomio-deploy > ~/backup.log 2>&1; s3cmd put ~/loomio-deploy/backups/* s3://somebucket/$(date +\%F)/ > ~/s3cmd.log 2>&1
-
-```
+Database backups are automatic in the default configuration, you'll find them in the `pgdumps` directory. 
+You just need to snapshot the filesystem, which should be as simple as a daily snapshot via your VPS dashboard.
 
 # Integrations
 
