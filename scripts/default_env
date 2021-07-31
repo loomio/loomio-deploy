@@ -5,6 +5,7 @@ CANONICAL_HOST=REPLACE_WITH_HOSTNAME
 VIRTUAL_HOST=REPLACE_WITH_HOSTNAME
 SITE_NAME=REPLACE_WITH_HOSTNAME
 
+
 # this is to configure letsencrypt to automatically issue and renew your hostname
 LETSENCRYPT_HOST=REPLACE_WITH_HOSTNAME
 LETSENCRYPT_EMAIL=REPLACE_WITH_CONTACT_EMAIL
@@ -59,6 +60,7 @@ USE_RACK_ATTACK=1
 # FEATURES_DISABLE_PUBLIC_GROUPS=1   # disable /explore
 # FEATURES_DISABLE_HELP_LINK=1       # disable the help link
 # MAX_PENDING_INVITATIONS=100        # maximum unaccepted invitations a group have have
+# FEATURES_VOTE_REACTIONS=1          # allow reactions to votes
 
 # Enable search engines to index public content
 # ALLOW_ROBOTS=1
