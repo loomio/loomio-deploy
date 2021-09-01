@@ -51,6 +51,7 @@ services:
       - ./files:/loomio/public/files
       - ./plugins:/loomio/plugins/docker
       - ./import:/import
+      - ./tmp:/loomio/tmp
     networks:
       - main
     depends_on:
@@ -73,6 +74,7 @@ services:
       - ./storage:/loomio/storage
       - ./files:/loomio/public/files
       - ./plugins:/loomio/plugins/docker
+      - ./tmp:/loomio/tmp
 
   db:
     container_name: loomio-db
