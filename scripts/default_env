@@ -10,9 +10,6 @@ SITE_NAME=REPLACE_WITH_HOSTNAME
 LETSENCRYPT_HOST=REPLACE_WITH_HOSTNAME
 LETSENCRYPT_EMAIL=REPLACE_WITH_CONTACT_EMAIL
 
-# the number of dots in your hostname
-TLD_LENGTH=REPLACE_WITH_TLD_LENGTH
-
 # uncomment this if you want a default subdomain of www (eg: www.loomio.org)
 # DEFAULT_SUBDOMAIN=www
 
