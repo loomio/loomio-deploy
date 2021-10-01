@@ -4,7 +4,8 @@ CANONICAL_HOST=REPLACE_WITH_HOSTNAME
 # this is to tell nginx that you want requests for this hostname to come to the app
 VIRTUAL_HOST=REPLACE_WITH_HOSTNAME
 SITE_NAME=REPLACE_WITH_HOSTNAME
-
+REPLY_HOSTNAME=REPLACE_WITH_HOSTNAME
+CHANNELS_URI=wss://channels.REPLACE_WITH_HOSTNAME
 
 # this is to configure letsencrypt to automatically issue and renew your hostname
 LETSENCRYPT_HOST=REPLACE_WITH_HOSTNAME
@@ -25,12 +26,8 @@ SMTP_SERVER=smtp.example.com
 SMTP_PORT=465
 SMTP_USERNAME=smtpusername
 SMTP_PASSWORD=smtppassword
-SMTP_USE_SSL=1 
+SMTP_USE_SSL=1
 # to disable SSL comment out line rather than changing to 0
-
-REPLY_HOSTNAME=REPLACE_WITH_HOSTNAME
-
-CHANNELS_URI=wss://channels.REPLACE_WITH_HOSTNAME
 
 # helper bot is the account which welcomes people to their groups.
 HELPER_BOT_EMAIL=no-reply@REPLACE_WITH_HOSTNAME
@@ -70,6 +67,13 @@ USE_RACK_ATTACK=1
 # SAML_APP_KEY=1 # just a flag, keep value as 1
 # SAML_IDP_METADATA_URL=https://saml-metadata-url-provided-by-your-SSO-provider.com/12356
 #
+# We support monitoring the app with sentry, if you use it.
+# SENTRY_PUBLIC_DSN=https://1234567890@sentry.io/123
+
+# Enable monitoring with Posthog
+# POSTHOG_HOST=https://posthog.example.com
+# POSTHOG_KEY=phc_1234567890
+
 # Disable login via email (usually when you have enabled SSO of some kind)
 # FEATURES_DISABLE_EMAIL_LOGIN=1
 
