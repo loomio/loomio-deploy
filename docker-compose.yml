@@ -15,7 +15,7 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d:rw
       - ./nginx/vhost.d:/etc/nginx/vhost.d:rw
       - ./nginx/html:/usr/share/nginx/html:rw
-      - ./nginx/certs:/etc/nginx/certs:ro
+      - ./nginx/certs:/etc/nginx/certs:rw
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
     restart: unless-stopped
