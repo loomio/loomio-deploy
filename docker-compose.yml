@@ -1,9 +1,8 @@
 version: '3'
 
 services:
-  nginx:
-    container_name: loomio-nginx
-    image: jwilder/nginx-proxy:alpine
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy:alpine
     labels:
       - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true"
     networks:
@@ -12,27 +11,25 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d:rw
-      - ./nginx/vhost.d:/etc/nginx/vhost.d:rw
-      - ./nginx/html:/usr/share/nginx/html:rw
-      - ./nginx/certs:/etc/nginx/certs:ro
-      - /etc/localtime:/etc/localtime:ro
+      - ./nginx.conf:/etc/nginx/conf.d/custom.conf:ro
+      - certs:/etc/nginx/certs
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
     restart: unless-stopped
 
-  letsencrypt:
-    container_name: loomio-letsencrypt
+  nginx-proxy-acme:
     image: jrcs/letsencrypt-nginx-proxy-companion
     networks:
       - main
     depends_on:
-      - nginx
+      - nginx-proxy
     volumes:
-      - ./nginx/certs:/etc/nginx/certs:rw
-      - ./nginx/vhost.d:/etc/nginx/vhost.d:rw
-      - ./nginx/html:/usr/share/nginx/html:rw
-      - /etc/localtime:/etc/localtime:ro
+      - certs:/etc/nginx/certs
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - acme:/etc/acme.sh
     restart: unless-stopped
 
   app:
@@ -51,6 +48,7 @@ services:
       - ./files:/loomio/public/files
       - ./plugins:/loomio/plugins/docker
       - ./import:/import
+      - ./tmp:/loomio/tmp
     networks:
       - main
     depends_on:
@@ -88,6 +86,28 @@ services:
      - POSTGRES_DB=loomio_production
      - PGDATA=/pgdata
 
+  pgbackups:
+    image: prodrigestivill/postgres-backup-local
+    restart: always
+    user: postgres:postgres
+    volumes:
+      - ./pgdumps:/backups
+    links:
+      - db
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=loomio_production
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_EXTRA_OPTS=-Z6 --schema=public --blobs
+      - SCHEDULE=@daily
+      - BACKUP_KEEP_DAYS=7
+      - BACKUP_KEEP_WEEKS=1
+      - BACKUP_KEEP_MONTHS=1
+      - HEALTHCHECK_PORT=8080
+
   redis:
     container_name: loomio-redis
     image: redis:5.0
@@ -120,3 +140,9 @@ services:
 
 networks:
   main:
+
+volumes:
+  certs:
+  vhost:
+  html:
+  acme:

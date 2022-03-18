@@ -12,3 +12,5 @@ plugins
 *.pg_dump
 pgdumps
 channels_env
+storage
+tmp
