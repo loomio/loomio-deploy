@@ -33,6 +33,12 @@ Loomio supports "Reply by email" and to enable this you need an MX record so mai
 MX loomio.example.com, loomio.example.com, priority 0
 ```
 
+Additionally, create a CNAME record that points `channels.loomio.example.com` to `loomio.example.com`. The records would look like this:
+
+```
+channels.loomio.example.com.    600    IN    CNAME    loomio.example.com.
+loomio.example.com.    600    IN    A    123.123.123.123
+```
 
 ## Configure the server
 
@@ -49,7 +55,7 @@ These commands install docker and docker-compose, copy and paste.
 
 ```sh
 snap install docker
-sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ```
 
@@ -88,22 +94,6 @@ Now have a look inside the files:
 ```sh
 cat env
 ```
-
-### Usage reporting
-
-By default your Loomio instance will report back to www.loomio.org with the number of discussions, comments, polls, stances, users and visits that your site has had.
-
-To be super clear, this does not transfer private data: no user_ids, no user created content, no titles, no names. Simply a count of the number of records you have.
-
-Once per day it will send those numbers and your hostname to us, so that we are able to measure Loomio usage around the world, so that we can tell what impact our work is having.
-
-If you wish to disable this reporting function, add the following line to your `env` file.
-
-```
-DISABLE_USAGE_REPORTING=1
-```
-
-__My request to you, is that you do not disable usage reporting__. It's really encouraging to see other active instances of Loomio, and the information can help us report our impact as a social enterprise and business.
 
 ### Setup SMTP
 
@@ -153,7 +143,7 @@ This command starts the database, application, reply-by-email, and live-update s
 docker-compose up -d
 ```
 
-Before the rails server is started, the javascript client is built, which can take up to 5 minutes. This only happens the first time you start a new Loomio version - restarts should be faster.
+Give it a minute to start, then visit your URL while crossing your fingers!
 
 If you visit the url with your browser and the rails server is not yet running, but nginx is, you'll see a "503 bad gateway" error message.
 
@@ -215,22 +205,6 @@ docker exec -ti loomio-db su - postgres -c 'psql loomio_production'
 ```
 
 ## Backups
-We have provided a simple backup script to create a tgz file with a database dump and all the user uploads and system config.
+Database backups are automatic in the default configuration, you'll find them in the `pgdumps` directory. 
+You just need to snapshot the filesystem, which should be as simple as a daily snapshot via your VPS dashboard.
 
-```
-scripts/create_backup .
-```
-Your backup will be in loomio-deploy/backups/
-
-You may wish to add a crontab entry like this. I'll leave it up to you to configure s3cmd and your aws bucket.
-```
-0 0 * * *  ~/loomio-deploy/scripts/create_backup ~/loomio-deploy > ~/backup.log 2>&1; s3cmd put ~/loomio-deploy/backups/* s3://somebucket/$(date +\%F)/ > ~/s3cmd.log 2>&1
-
-```
-
-# Integrations
-
-## Login via Nextcloud
-Loomio must be registered in nextcloud as oauth 2.0 client using https://loomio.example.com/nextcloud/authorize as redirection URL.
-
-In loomio the NEXTCLOUD_HOST environment variable must point to the nextcloud instance, for example https://nextcloud.example.com. NEXTCLOUD_APP_KEY and NEXTCLOUD_APP_SECRET must be set to the client identifier and secret set by nextcloud.
