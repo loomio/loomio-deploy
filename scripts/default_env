@@ -1,15 +1,11 @@
-# this is the hostname of your app used by loomio
+# this is the hostname of your app eg: loomio.org
 CANONICAL_HOST=REPLACE_WITH_HOSTNAME
 
-# this is to tell nginx that you want requests for this hostname to come to the app
-VIRTUAL_HOST=REPLACE_WITH_HOSTNAME
+# the human name of the app (Default Loomio)
 SITE_NAME=REPLACE_WITH_HOSTNAME
-REPLY_HOSTNAME=REPLACE_WITH_HOSTNAME
-CHANNELS_URI=wss://channels.REPLACE_WITH_HOSTNAME
 
-# this is to configure letsencrypt to automatically issue and renew your hostname
-LETSENCRYPT_HOST=REPLACE_WITH_HOSTNAME
-LETSENCRYPT_EMAIL=REPLACE_WITH_CONTACT_EMAIL
+# reply-to in email notifications
+REPLY_HOSTNAME=REPLACE_WITH_HOSTNAME
 
 # uncomment this if you want a default subdomain of www (eg: www.loomio.org)
 # DEFAULT_SUBDOMAIN=www
@@ -41,6 +37,14 @@ FORCE_SSL=1
 
 # Enable rate limiting on group creation, other POST actions
 USE_RACK_ATTACK=1
+
+# Postgres
+POSTGRES_PASSWORD=password
+POSTGRES_DB=loomio_production
+DATABASE_URL=postgresql://postgres:password@db/loomio_production
+
+# Redis URL
+REDIS_URL=redis://redis:6379
 
 # Send catch up email (missed yesterday) weekly
 # EMAIL_CATCH_UP_WEEKLY=1
