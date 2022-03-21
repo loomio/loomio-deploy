@@ -19,7 +19,7 @@ services:
     restart: unless-stopped
 
   nginx-proxy-acme:
-    image: jrcs/letsencrypt-nginx-proxy-companion
+    image: nginxproxy/acme-companion
     networks:
       - main
     depends_on:
