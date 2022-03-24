@@ -1,11 +1,10 @@
 # Deploy your own Loomio
 
-This repo contains a docker-compose configuration for running Loomio on your own server.
+This repo contains a docker-compose configuration to run your own Loomio server.
+
+It can all run on a single host via docker and docker-compose, complete with an SSL certificate via letsencrypt.
 
 If you just want a local install of Loomio for development, see [Setting up a Loomio development environment](https://help.loomio.org/en/dev_manual/setup_dev_environment/).
-
-It runs multiple services on a single host with docker and docker-compose. It automatically issues
-an SSL certificate for you via the amazing [letsencrypt.org](https://letsencrypt.org/).
 
 ## What you'll need
 * Root access to a server, on a public IP address, running a recent Ubuntu with at least 1GB RAM (2GB recommended).
@@ -15,12 +14,9 @@ an SSL certificate for you via the amazing [letsencrypt.org](https://letsencrypt
 * An SMTP server for sending email.
 
 ## Network configuration
-What hostname will you be using for your Loomio instance? What is the IP address of your server?
-
-For the purposes of this example, the hostname will be loomio.example.com and the IP address is 123.123.123.123
+For this example, the hostname will be loomio.example.com and the IP address is 123.123.123.123
 
 ### DNS Records
-
 To allow people to access the site via your hostname you need an A record:
 
 ```
@@ -92,7 +88,7 @@ When you run this, remember to change `loomio.example.com` to your hostname, and
 Now have a look inside the files:
 
 ```sh
-cat env
+cat .env
 ```
 
 ### Setup SMTP
@@ -107,13 +103,9 @@ For everyone else here are some options to consider:
 
 - Setup your own SMTP server with something like Haraka
 
-Edit the `env` file and enter the right SMTP settings for your setup.
+Edit the `.env` file and enter the right SMTP settings for your setup.
 
 You might also need to add an SPF DNS record to indicate that the SMTP can send mail for your domain.
-
-```sh
-nano env
-```
 
 ### Initialize the database
 This command initializes a new database for your Loomio instance to use.

@@ -38,10 +38,10 @@ services:
     restart: unless-stopped
     expose:
       - 3000
-    env_file: ./env
+    env_file: ./.env
     environment:
-      - DATABASE_URL=postgresql://postgres:password@db/loomio_production
-      - REDIS_URL=redis://redis:6379
+      - VIRTUAL_HOST=${CANONICAL_HOST}
+      - LETSENCRYPT_HOST=${CANONICAL_HOST}
     volumes:
       - ./uploads:/loomio/public/system
       - ./storage:/loomio/storage
@@ -61,10 +61,8 @@ services:
     restart: always
     networks:
       - main
-    env_file: ./env
+    env_file: ./.env
     environment:
-      - DATABASE_URL=postgresql://postgres:password@db/loomio_production
-      - REDIS_URL=redis://redis:6379
       - TASK=worker
     volumes:
       - ./uploads:/loomio/public/system
@@ -79,13 +77,13 @@ services:
     restart: unless-stopped
     networks:
       - main
+    env_file: ./.env
     volumes:
       - ./pgdata:/pgdata
       - ./pgdumps:/pgdumps
     environment:
-     - POSTGRES_PASSWORD=password
-     - POSTGRES_DB=loomio_production
      - PGDATA=/pgdata
+
   redis:
     container_name: loomio-redis
     image: redis:5.0
@@ -110,11 +108,12 @@ services:
     restart: unless-stopped
     networks:
       - main
-    env_file: ./channels_env
+    env_file: ./.env
     depends_on:
       - redis
     environment:
-      - REDIS_URL=redis://redis:6379
+      - VIRTUAL_HOST=channels.${CANONICAL_HOST}
+      - LETSENCRYPT_HOST=channels.${CANONICAL_HOST}
 
   pgbackups:
     image: prodrigestivill/postgres-backup-local
