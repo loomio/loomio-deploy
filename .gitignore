@@ -1,5 +1,4 @@
-env
-faye_env
+.env
 pgdata
 client
 uploads
