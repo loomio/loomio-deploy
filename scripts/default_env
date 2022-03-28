@@ -43,6 +43,8 @@ FORCE_SSL=1
 
 # Enable rate limiting on group creation, other POST actions
 USE_RACK_ATTACK=1
+RACK_ATTACK_RATE_MULTPLIER=5
+RACK_ATTACK_TIME_MULTPLIER=1
 
 # Postgres
 POSTGRES_PASSWORD=password
