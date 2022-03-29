@@ -4,7 +4,7 @@ This is what you need to run your own Loomio server.
 
 It will all run on a single host via docker and docker-compose, complete with an SSL certificate via letsencrypt.
 
-If you just want a local install of Loomio for development, see [Setting up a Loomio development environment](https://help.loomio.org/en/dev_manual/setup_dev_environment/).
+If you just want a local install of Loomio for development, see [Setting up a Loomio development environment](https://github.com/loomio/loomio/blob/master/DEVSETUP.md).
 
 ## What you'll need
 * Root access to a server, on a public IP address, running Ubuntu with at least 1GB RAM (2GB recommended).
