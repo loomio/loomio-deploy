@@ -13,6 +13,9 @@ SITE_NAME=REPLACE_WITH_HOSTNAME
 # reply-to in email notifications
 REPLY_HOSTNAME=REPLACE_WITH_HOSTNAME
 
+# channels
+CHANNELS_URI=wss://channels.REPLACE_WITH_HOSTNAME
+
 # uncomment this if you want a default subdomain of www (eg: www.loomio.org)
 # DEFAULT_SUBDOMAIN=www
 
