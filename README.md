@@ -2,7 +2,7 @@
 
 This is what you need to run your own Loomio server.
 
-It will all run on a single host via docker and docker-compose, complete with an SSL certificate via letsencrypt.
+It will run all Loomio services on a single host via docker and docker-compose, complete with an SSL certificate via letsencrypt.
 
 If you just want a local install of Loomio for development, see [Setting up a Loomio development environment](https://github.com/loomio/loomio/blob/master/DEVSETUP.md).
 
