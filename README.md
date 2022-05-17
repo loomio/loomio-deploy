@@ -200,3 +200,11 @@ docker exec -ti loomio-db su - postgres -c 'psql loomio_production'
 Database backups are automatic in the default configuration, you'll find them in the `pgdumps` directory. 
 You just need to snapshot the filesystem, which should be as simple as a daily snapshot via your VPS dashboard.
 
+# Updating old versions of Loomio
+
+Please upgrade through the following versions to ensure that migrations work
+v2.4.2
+v2.8.8
+v2.11.13
+
+
