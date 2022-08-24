@@ -184,6 +184,12 @@ From time to time, or if you are running out of disk space (check `/var/lib/dock
 docker system prune
 ```
 
+It can be helpful to wrap all these commands together in a single line to update Loomio:
+
+```sh
+docker system prune -f; docker-compose pull; docker-compose run app rake db:migrate; docker-compose down; docker-compose up -d
+```
+
 To login to your running rails app console:
 
 ```sh
