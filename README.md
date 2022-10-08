@@ -95,7 +95,7 @@ cat .env
 
 You need to bring your own SMTP server for Loomio to send emails.
 
-If you already have and SMTP, that's great, put the settings into the `env` file.
+If you already have an SMTP server, that's great, put the settings into the `env` file.
 
 For everyone else here are some options to consider:
 
