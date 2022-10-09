@@ -122,7 +122,7 @@ Doing this tells the server what regular tasks it needs to run. These tasks incl
 * Closing proposals and notifying users they have closed.
 * Sending "Yesterday on Loomio", a digest of activity users have not already read. This is sent to users at 6am in their local timezone.
 
-Run `crontab -e` and apped the following line:
+Run `crontab -e` and append the following line:
 
 ```
 0 * * * *  /snap/bin/docker exec loomio-worker bundle exec rake loomio:hourly_tasks > ~/rake.log 2>&1
