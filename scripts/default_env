@@ -129,6 +129,17 @@ ACTIVE_STORAGE_SERVICE=local
 # GOOGLE_APP_KEY=REPLACE
 # GOOGLE_APP_SECRET=REPLACE
 
+# OAUTH envs with examples
+# OAUTH_AUTH_URL=https://login.microsoftonline.com/token/oauth2/v2.0/authorize
+# OAUTH_TOKEN_URL=https://login.microsoftonline.com/token/oauth2/v2.0/token    
+# OAUTH_PROFILE_URL=https://graph.microsoft.com/v1.0/me 
+# OAUTH_SCOPE=https://graph.microsoft.com/.default
+# OAUTH_APP_KEY=clientid
+# OAUTH_APP_SECRET=secret key
+# OAUTH_ATTR_UID=id
+# OAUTH_ATTR_NAME=displayName
+# OAUTH_ATTR_EMAIL=mail
+
 # Theme images
 # images should be a multiple of 32px tall.
 # THEME_ICON_SRC=/files/icon.png
