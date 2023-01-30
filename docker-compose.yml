@@ -119,6 +119,8 @@ services:
     image: prodrigestivill/postgres-backup-local
     restart: always
     user: postgres:postgres
+    networks:
+      - main
     volumes:
       - ./pgdumps:/backups
     links:
