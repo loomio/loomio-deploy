@@ -2,10 +2,13 @@ LOOMIO_CONTAINER_IMAGE=loomio/loomio
 LOOMIO_CONTAINER_TAG=stable
 MAILIN_CONTAINER_IMAGE=loomio/mailin-docker
 MAILIN_CONTAINER_TAG=latest
-POSTGRES_CONTAINER_TAG=12.2
+POSTGRES_CONTAINER_TAG=15.2
 
 # this is the hostname of your app eg: loomio.org
 CANONICAL_HOST=REPLACE_WITH_HOSTNAME
+
+# email address of admin of the server for LetsEncrypt
+SUPPORT_EMAIL=REPLACE_WITH_CONTACT_EMAIL
 
 # the human name of the app (Default Loomio)
 SITE_NAME=REPLACE_WITH_HOSTNAME
@@ -13,16 +16,10 @@ SITE_NAME=REPLACE_WITH_HOSTNAME
 # reply-to in email notifications
 REPLY_HOSTNAME=REPLACE_WITH_HOSTNAME
 
-
-# channels
+# hostname of the node.js app that handles websocket stuff
 CHANNELS_URI=wss://channels.REPLACE_WITH_HOSTNAME
 
-# uncomment this if you want a default subdomain of www (eg: www.loomio.org)
-# DEFAULT_SUBDOMAIN=www
-
 # smtp settings
-SUPPORT_EMAIL=REPLACE_WITH_CONTACT_EMAIL
-
 SMTP_AUTH=plain
 SMTP_DOMAIN=REPLACE_WITH_HOSTNAME
 SMTP_SERVER=smtp.example.com
@@ -30,7 +27,7 @@ SMTP_PORT=465
 SMTP_USERNAME=smtpusername
 SMTP_PASSWORD=smtppassword
 SMTP_USE_SSL=1
-# to disable SSL comment out line rather than changing to 0
+# to disable SSL comment out line (rather than changing to 0)
 
 # helper bot is the account which welcomes people to their groups.
 HELPER_BOT_EMAIL=no-reply@REPLACE_WITH_HOSTNAME
@@ -60,49 +57,35 @@ REDIS_URL=redis://redis:6379/0
 
 # attachment storage service
 # local will keep attachments on the server's disk under ./storage
-# for cloud storage (recommended) try amazon, digitalocean or s3_compatible
-
+# for cloud storage options include amazon, digitalocean or s3_compatible
 ACTIVE_STORAGE_SERVICE=local 
 
-# stoage.yml for reference
-# amazon:
-#   service: S3
-#   access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
-#   secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
-#   bucket: <%= ENV['AWS_BUCKET'] %>
-#   region: <%= ENV['AWS_REGION'] %>
+# envs for amazon
+# AWS_ACCESS_KEY_ID=
+# AWS_SECRET_ACCESS_KEY=
+# AWS_BUCKET=
+# AWS_REGION=
 #
-# digitalocean:
-#   service: S3
-#   endpoint: <%= ENV['DO_ENDPOINT'] %>
-#   access_key_id: <%= ENV['DO_ACCESS_KEY_ID'] %>
-#   secret_access_key: <%= ENV['DO_SECRET_ACCESS_KEY'] %>
-#   bucket: <%= ENV['DO_BUCKET'] %>
-#   region: ignored
+# example envs for digitalocean
+# DO_ENDPOINT=https://syd1.digitaloceanspaces.com
+# DO_ACCESS_KEY_ID=
+# DO_SECRET_ACCESS_KEY=
+# DO_BUCKET=abucketname
 # 
-# s3_compatible:
-#   service: S3
-#   endpoint: <%= ENV.fetch('STORAGE_ENDPOINT', '') %>
-#   access_key_id: <%= ENV.fetch('STORAGE_ACCESS_KEY_ID', '') %>
-#   secret_access_key: <%= ENV.fetch('STORAGE_SECRET_ACCESS_KEY', '') %>
-#   region: <%= ENV.fetch('STORAGE_REGION', '') %>
-#   bucket: <%= ENV.fetch('STORAGE_BUCKET_NAME', '') %>
-#   force_path_style: <%= ENV.fetch('STORAGE_FORCE_PATH_STYLE', false) %>
-
-# Send catch up email (missed yesterday) weekly
-# EMAIL_CATCH_UP_WEEKLY=1
-
-# subscribe on participation default for new users
-# uncomment this to change "subscribe on participation" to be false for new users
-# EMAIL_ON_PARTICIPATION_DEFAULT_FALSE=1
+# envs for s3_compatible
+# STORAGE_ENDPOINT
+# STORAGE_ACCESS_KEY_ID
+# STORAGE_SECRET_ACCESS_KEY
+# STORAGE_REGION
+# STORAGE_BUCKET_NAME
+# STORAGE_FORCE_PATH_STYLE
 
 # Uncomment these to disable features
 # FEATURES_DISABLE_CREATE_USER=1     # users must be invited
 # FEATURES_DISABLE_CREATE_GROUP=1    # users cannot create groups
 # FEATURES_DISABLE_PUBLIC_GROUPS=1   # disable /explore
 # FEATURES_DISABLE_HELP_LINK=1       # disable the help link
-# MAX_PENDING_INVITATIONS=100        # maximum unaccepted invitations a group have have
-# FEATURES_VOTE_REACTIONS=1          # allow reactions to votes
+# FEATURES_DISABLE_EMAIL_LOGIN=1     # Disable login via email (usually when you have enabled SSO of some kind)
 
 # Enable search engines to index public content
 # ALLOW_ROBOTS=1
@@ -114,12 +97,9 @@ ACTIVE_STORAGE_SERVICE=local
 # Sentry DSN
 # SENTRY_PUBLIC_DSN=https://1234567890@sentry.io/123
 
-# monitoring with Posthog
-# POSTHOG_HOST=https://posthog.example.com
-# POSTHOG_KEY=phc_1234567890
-
-# Disable login via email (usually when you have enabled SSO of some kind)
-# FEATURES_DISABLE_EMAIL_LOGIN=1
+# Plausible metrics
+# PLAUSIBLE_SRC=https://plausible.io
+# PLASIBLE_SITE=REPLACE_WITH_HOSTANME
 
 # oauth providers, to let your users login using external accounts
 # FACEBOOK_APP_KEY=REPLACE
