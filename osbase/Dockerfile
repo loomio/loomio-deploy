@@ -1,10 +1,8 @@
-# Base osimage for loomio docker images
-# it saves a bit of build time
+# Base osimage for loomio docker images - it saves a bit of build time
 # note to self: to publish this I run commands similar to these:
-# docker build . -t loomio/osbase:r276-n14-0
+# docker build . -t loomio/osbase:r276-n14-1
 # docker login 
-# docker image ls
-# docker push loomio/osbase:r276-n14-0
+# docker push loomio/osbase:r276-n14-1
 
 FROM ruby:2.7.6
 
@@ -15,8 +13,55 @@ RUN gem update --system
 
 RUN apt-get update -qq
 
-RUN apt-get install -y autoconf bison patch build-essential rustc libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libgmp-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev uuid-dev sudo git imagemagick ffmpeg mupdf libvips libvips-dev libpng-dev libjpeg-dev libwebp-dev libheif-dev libpq-dev libxml2-dev libxslt1-dev curl python3
-
+RUN apt-get install -y \
+    autoconf \
+    bison \
+    build-essential \
+    curl \
+    ffmpeg \
+    git \
+    imagemagick \
+    libcfitsio-dev \
+    libdb-dev \
+    libexif-dev \
+    libexpat1-dev \
+    libffi-dev \
+    libfftw3-dev \
+    libgdbm-dev \
+    libgdbm6 \
+    libglib2.0-dev \
+    libgmp-dev \
+    libgsf-1-dev \
+    libheif-dev \
+    libimagequant-dev \
+    libjpeg-dev \
+    libmatio-dev \
+    libncurses5-dev \
+    libopenexr-dev \
+    libopenjp2-7-dev \
+    libopenslide-dev \
+    liborc-dev \
+    libpango1.0-dev \
+    libpng-dev \
+    libpoppler-glib-dev \
+    libpq-dev \
+    libreadline6-dev \
+    librsvg2-dev \
+    libssl-dev \
+    libtiff5-dev \
+    libvips \
+    libvips-dev \
+    libwebp-dev \
+    libxml2-dev \
+    libxslt1-dev \
+    libyaml-dev \
+    mupdf \
+    patch \
+    python3 \
+    rustc \
+    sudo \
+    uuid-dev \
+    zlib1g-dev
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/man
 
