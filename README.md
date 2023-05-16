@@ -206,8 +206,9 @@ Database backups are automatic in the default configuration, you'll find them in
 # Updating old versions of Loomio
 
 Please upgrade through the following versions to ensure that migrations work
-v2.4.2
-v2.8.8
-v2.11.13
 
+- v2.4.2
+- v2.8.8
+- v2.11.13
+- v2.17.1
 
