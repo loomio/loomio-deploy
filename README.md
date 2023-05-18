@@ -158,6 +158,11 @@ you can now access the admin interface at https://loomio.example.com/admin
 
 
 ## If something goes wrong
+
+To see system error messages as they happen run `docker-compose logs -f` and make a request against the server.
+
+If you want to be notified of system errors you could setup [Sentry](https://sentry.io/) and add it to the env.
+
 Confirm `env` settings are correct.
 
 After you change your `env` files you need to restart the system:
