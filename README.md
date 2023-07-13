@@ -210,7 +210,7 @@ Database backups are automatic in the default configuration, you'll find them in
 
 # Updating old versions of Loomio
 
-Please upgrade through the following versions to ensure that migrations work
+Please upgrade through the following versions. You need to edit `.env` and change LOOMIO_CONTAINER_TAG to each version, then run the upgrade command mentioned further up this document. When the migrations have completed, apply the next tag and repeat. 
 
 - v2.4.2
 - v2.8.8
