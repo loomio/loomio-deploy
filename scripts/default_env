@@ -58,7 +58,7 @@ REDIS_URL=redis://redis:6379/0
 # attachment storage service
 # local will keep attachments on the server's disk under ./storage
 # for cloud storage options include amazon, digitalocean or s3_compatible
-ACTIVE_STORAGE_SERVICE=local 
+ACTIVE_STORAGE_SERVICE=local
 
 # envs for amazon
 # AWS_ACCESS_KEY_ID=
