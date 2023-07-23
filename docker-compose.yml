@@ -2,7 +2,7 @@ version: '3'
 
 services:
   nginx-proxy:
-    image: nginxproxy/nginx-proxy:alpine
+    image: docker.io/library/nginxproxy/nginx-proxy:alpine
     labels:
       - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true"
     networks:
@@ -19,7 +19,7 @@ services:
     restart: unless-stopped
 
   nginx-proxy-acme:
-    image: nginxproxy/acme-companion
+    image: docker.io/library/nginxproxy/acme-companion
     networks:
       - main
     depends_on:
@@ -34,7 +34,7 @@ services:
 
   app:
     container_name: loomio-app
-    image: ${LOOMIO_CONTAINER_IMAGE}:${LOOMIO_CONTAINER_TAG}
+    image: docker.io/library/${LOOMIO_CONTAINER_IMAGE}:${LOOMIO_CONTAINER_TAG}
     restart: unless-stopped
     expose:
       - 3000
@@ -57,7 +57,7 @@ services:
 
   worker:
     container_name: loomio-worker
-    image: ${LOOMIO_CONTAINER_IMAGE}:${LOOMIO_CONTAINER_TAG}
+    image: docker.io/library/${LOOMIO_CONTAINER_IMAGE}:${LOOMIO_CONTAINER_TAG}
     restart: always
     networks:
       - main
@@ -73,7 +73,7 @@ services:
 
   db:
     container_name: loomio-db
-    image: postgres:${POSTGRES_CONTAINER_TAG}
+    image: docker.io/library/postgres:${POSTGRES_CONTAINER_TAG}
     restart: unless-stopped
     networks:
       - main
@@ -86,14 +86,14 @@ services:
 
   redis:
     container_name: loomio-redis
-    image: redis:5.0
+    image: docker.io/library/redis:5.0
     restart: unless-stopped
     networks:
       - main
 
   mailin:
     container_name: loomio-mailin
-    image: ${MAILIN_CONTAINER_IMAGE}:${MAILIN_CONTAINER_TAG}
+    image: docker.io/library/${MAILIN_CONTAINER_IMAGE}:${MAILIN_CONTAINER_TAG}
     restart: unless-stopped
     networks:
       - main
@@ -104,7 +104,7 @@ services:
 
   channels:
     container_name: loomio-channels
-    image: loomio/loomio_channel_server
+    image: docker.io/library/loomio/loomio_channel_server
     restart: unless-stopped
     networks:
       - main
@@ -116,7 +116,7 @@ services:
       - LETSENCRYPT_HOST=channels.${CANONICAL_HOST}
 
   pgbackups:
-    image: prodrigestivill/postgres-backup-local
+    image: docker.io/library/prodrigestivill/postgres-backup-local
     restart: always
     user: postgres:postgres
     networks:
