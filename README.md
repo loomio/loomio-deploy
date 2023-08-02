@@ -2,7 +2,7 @@
 
 This is what you need to run your own Loomio server.
 
-It will run all Loomio services on a single host via docker and docker-compose, complete with an SSL certificate via letsencrypt.
+It will run all Loomio services on a single host via docker and docker compose, complete with an SSL certificate via letsencrypt.
 
 If you just want a local install of Loomio for development, see [Setting up a Loomio development environment](https://github.com/loomio/loomio/blob/master/DEVSETUP.md).
 
@@ -45,12 +45,22 @@ To login to the server, open a terminal window and type:
 ssh -A root@loomio.example.com
 ```
 
-### Install docker and docker-compose
+### Install docker
 
-These commands install docker and docker-compose, copy and paste.
+These steps to install docker are copied from [docs.docker.com](https://docs.docker.com/engine/install/ubuntu/)
 
 ```sh
-snap install docker
+apt-get update
+apt-get install ca-certificates curl gnupg
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+apt-get update
+apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker compose-plugin
 ```
 
 ### Clone the loomio-deploy git repository
@@ -109,8 +119,8 @@ You might also need to add an SPF DNS record to indicate that the SMTP can send 
 This command initializes a new database for your Loomio instance to use.
 
 ```
-docker-compose up -d db
-docker-compose run app rake db:setup
+docker compose up -d db
+docker compose run app rake db:setup
 ```
 
 ### Install crontab
@@ -130,7 +140,7 @@ Run `crontab -e` and append the following line:
 This command starts the database, application, reply-by-email, and live-update services all at once.
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 Give it a minute to start, then visit your URL while crossing your fingers!
@@ -140,7 +150,7 @@ If you visit the url with your browser and the rails server is not yet running, 
 You'll want to see the logs as it all starts, run the following command:
 
 ```
-docker-compose logs -f
+docker compose logs -f
 ```
 
 ## Try it out
@@ -150,7 +160,7 @@ visit your hostname in your browser.
 Once you have signed in (and confirmed your email), grant yourself admin rights
 
 ```
-docker-compose run app rails c
+docker compose run app rails c
 User.last.update(is_admin: true)
 ```
 
@@ -159,7 +169,7 @@ you can now access the admin interface at https://loomio.example.com/admin
 
 ## If something goes wrong
 
-To see system error messages as they happen run `docker-compose logs -f` and make a request against the server.
+To see system error messages as they happen run `docker compose logs -f` and make a request against the server.
 
 If you want to be notified of system errors you could setup [Sentry](https://sentry.io/) and add it to the env.
 
@@ -168,17 +178,17 @@ Confirm `env` settings are correct.
 After you change your `env` files you need to restart the system:
 
 ```sh
-docker-compose down
-docker-compose up -d
+docker compose down
+docker compose up -d
 ```
 
 To update Loomio to the latest image you'll need to stop, rm, pull, apply potential changes to the database schema, and run again.
 
 ```sh
-docker-compose pull
-docker-compose down
-docker-compose run app rake db:migrate
-docker-compose up -d
+docker compose pull
+docker compose down
+docker compose run app rake db:migrate
+docker compose up -d
 ```
 
 From time to time, or if you are running out of disk space (check `/var/lib/docker`):
@@ -190,13 +200,13 @@ docker system prune
 It can be helpful to wrap all these commands together in a single line to update Loomio:
 
 ```sh
-docker system prune -f; docker-compose pull; docker-compose run app rake db:migrate; docker-compose down; docker-compose up -d
+docker system prune -f; docker compose pull; docker compose run app rake db:migrate; docker compose down; docker compose up -d
 ```
 
 To login to your running rails app console:
 
 ```sh
-docker-compose run app rails c
+docker compose run app rails c
 ```
 
 A PostgreSQL shell to inspect the database:
