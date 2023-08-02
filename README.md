@@ -133,7 +133,7 @@ Doing this tells the server what regular tasks it needs to run. These tasks incl
 Run `crontab -e` and append the following line:
 
 ```
-0 * * * *  /snap/bin/docker exec loomio-worker bundle exec rake loomio:hourly_tasks > ~/rake.log 2>&1
+0 * * * *  /usr/bin/docker exec loomio-worker bundle exec rake loomio:hourly_tasks > ~/rake.log 2>&1
 ```
 
 ## Starting the services
