@@ -185,7 +185,7 @@ docker compose up -d
 To update Loomio to the latest stable version just run the update script.
 
 ```sh
-scripts/update
+./scripts/update
 ```
 
 To login to your running rails app console:
