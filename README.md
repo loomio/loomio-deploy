@@ -182,25 +182,10 @@ docker compose down
 docker compose up -d
 ```
 
-To update Loomio to the latest image you'll need to stop, rm, pull, apply potential changes to the database schema, and run again.
+To update Loomio to the latest stable version just run the update script.
 
 ```sh
-docker compose pull
-docker compose down
-docker compose run app rake db:migrate
-docker compose up -d
-```
-
-From time to time, or if you are running out of disk space (check `/var/lib/docker`):
-
-```sh
-docker system prune
-```
-
-It can be helpful to wrap all these commands together in a single line to update Loomio:
-
-```sh
-docker system prune -f; docker compose pull; docker compose run app rake db:migrate; docker compose down; docker compose up -d
+scripts/update
 ```
 
 To login to your running rails app console:
