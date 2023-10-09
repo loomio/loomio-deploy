@@ -1,2 +1,2 @@
 #!/bin/bash
-docker system prune -f && docker compose pull && docker compose down && docker compose run app rake db:migrate && docker compose down && docker compose up -d
+docker system prune -a -f && docker compose pull && docker compose down && docker compose run app rake db:migrate && docker compose down && docker compose up -d
