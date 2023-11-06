@@ -14,13 +14,13 @@ If you just want a local install of Loomio for development, see [Setting up a Lo
 * An SMTP server
 
 ## Network configuration
-For this example, the hostname will be loomio.example.com and the IP address is 123.123.123.123
+For this example, the hostname will be loomio.example.com and the IP address is 192.0.2.1
 
 ### DNS Records
 To allow people to access the site via your hostname you need an A record:
 
 ```
-A loomio.example.com, 123.123.123.123
+A loomio.example.com, 192.0.2.1
 ```
 
 Loomio supports "Reply by email" and to enable this you need an MX record so mail servers know where to direct these emails.
