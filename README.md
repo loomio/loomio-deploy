@@ -202,6 +202,16 @@ docker exec -ti loomio-db su - postgres -c 'psql loomio_production'
 ## Backups
 Database backups are automatic in the default configuration, you'll find them in the `pgdumps` directory. See [prodrigestivill/docker-postgres-backup-local](https://github.com/prodrigestivill/docker-postgres-backup-local) for more information, including how to restore a backup.
 
+Dump SQL
+```
+docker exec -ti loomio-db su - postgres -c 'pg_dump -c loomio_production' > loomio_production.sql
+```
+
+Restore SQL
+```
+cat loomio_production.sql | docker exec -i loomio-db su - postgres -c 'psql loomio_production'
+```
+
 # Updating old versions of Loomio
 
 Please upgrade through the following versions. You need to edit `.env` and change LOOMIO_CONTAINER_TAG to each version, then run the upgrade command mentioned further up this document. When the migrations have completed, apply the next tag and repeat. 
