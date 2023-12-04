@@ -209,5 +209,6 @@ Please upgrade through the following versions. You need to edit `.env` and chang
 - v2.4.2
 - v2.8.8
 - v2.11.13
+- v2.15.4
 - v2.17.1
 
