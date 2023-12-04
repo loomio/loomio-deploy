@@ -200,7 +200,16 @@ docker exec -ti loomio-db su - postgres -c 'psql loomio_production'
 ```
 
 ## Backups
-Database backups are automatic in the default configuration, you'll find them in the `pgdumps` directory. See [prodrigestivill/docker-postgres-backup-local](https://github.com/prodrigestivill/docker-postgres-backup-local) for more information, including how to restore a backup.
+
+The default docker-compose.yml includes automatic backups with [prodrigestivill/docker-postgres-backup-local](https://github.com/prodrigestivill/docker-postgres-backup-local), however, you'll need to run `mkdir -p pgdumps && chown -R 999:999 pgdumps` to set the correct permissions for this to work.
+
+You can test that the automatic backup permissions are correct with this command:
+
+```
+docker run --rm -v "$PWD:/backups" -u "$(id -u):$(id -g)" --network=loomio-deploy_main -e POSTGRES_HOST=db -e POSTGRES_DB=loomio_production -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password  prodrigestivill/postgres-backup-local /backup.sh
+```
+
+However, sometimes you just want to make or restore an SQL snapshot directly.
 
 Dump SQL
 ```
