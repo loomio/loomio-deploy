@@ -223,7 +223,7 @@ cat loomio_production.sql | docker exec -i loomio-db su - postgres -c 'psql loom
 
 # Updating old versions of Loomio
 
-Please upgrade through the following versions. You need to edit `.env` and change LOOMIO_CONTAINER_TAG to each version, then run the upgrade command mentioned further up this document. When the migrations have completed, apply the next tag and repeat. 
+Please upgrade through the following versions. You need to edit `.env` and change LOOMIO_CONTAINER_TAG to each version, then run `./scripts/update`. When the migrations have completed, apply the next tag and repeat. 
 
 - v2.4.2
 - v2.8.8
