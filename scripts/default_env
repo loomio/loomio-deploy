@@ -125,6 +125,10 @@ ACTIVE_STORAGE_SERVICE=local
 # OAUTH_ATTR_EMAIL=mail
 # OAUTH_LOGIN_PROVIDER_NAME=My OAUTH SSO Provider Name
 
+# you can change 'Login via SAML' or 'Login via OAUTH' by setting this value
+# OAUTH_LOGIN_PROVIDER_NAME=SAML service
+# SAML_PROVIDER_NAME=OAUTH service
+
 # Theme images
 # images should be a multiple of 32px tall.
 # THEME_ICON_SRC=/files/icon.png
