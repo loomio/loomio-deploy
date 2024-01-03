@@ -83,6 +83,10 @@ This script will create and mount a 4GB swapfile. If you have less than 2GB RAM 
 ./scripts/create_swapfile
 ```
 
+### SSL teriminating proxy
+
+By default, docker-compose.yml includes an nginx proxy container that automatically handles fetching an SSL certificate via LetsEncrypt.org. If you don't need SSL termination, or you're running Loomio from behind a proxy, you can safely remove the nginx services from the docker-compose.yml file, or use the provided docker-compose-no-ssl.yml instead. Configuring reverse proxies and other advanced configurations are outside the scope of this documentation.
+
 ### Create your ENV files
 This script creates `env` files configured for you. It also creates directories on the host to hold user data.
 
@@ -97,6 +101,38 @@ Now have a look inside the files:
 ```sh
 cat .env
 ```
+
+### OAuth2 and OIDC (optional)
+
+The default environment file isn't configured for OAuth2 authentication out of the box. In order to enable it, there are several environment variables that need to be set to appropriate values:
+
+- `OAUTH_AUTH_URL` is used to specify the auth endpoint, for example `https://sso.yourdomain.com/realms/YourRealm/protocol/openid-connect/auth`.
+- `OAUTH_TOKEN_URL` is used to specify the token endpoint, for example `https://sso.yourdomain.com/realms/YourRealm/protocol/openid-connect/token`.
+- `OAUTH_PROFILE_URL` is used to fetch the user's profile data, for example `https://sso.yourdomain.com/realms/YourRealm/protocol/openid-connect/userinfo`.
+- `OAUTH_SCOPE` is the list of scopes passed in the auth request, for example `openid email profile`.
+- `OAUTH_APP_KEY` is what OIDC refers to as the Client ID. For example, `loomio`.
+- `OAUTH_APP_SECRET` is what OIDC refers to as the Client Secret. It's a long string of letters and numbers and other characters.
+- `OAUTH_ATTR_UID` specifies which user profile field is used for Loomio's internal unique identifier for this user. For example, `email`.
+- `OAUTH_ATTR_NAME` specifies which user profile field is used for Loomio's displayed name, for example `name`.
+- `OAUTH_ATTR_EMAIL` specifies which user profile field is used for the Loomio account email address, for example `email`.
+- `OAUTH_LOGIN_PROVIDER_NAME` is the label used for the SSO login button. The user will see this value when they're prompted to log in using SSO. For example, `Your Domain SSO`.
+
+For the ATTR variables, if you're not sure what your OAuth provider is returning, you can attempt a login and check the Loomio logs to see the response.
+
+If you do not wish to allow users to create non-SSO accounts, you should also use `FEATURES_DISABLE_EMAIL_LOGIN=1` to disable non-SSO logins.
+
+### SAML (optional)
+
+The default environment file isn't configured for SAML authentication out of the box. In order to enable it, there are several environment variables that need to be set to appropriate values:
+
+- `SAML_IDP_METADATA_URL` is used to specify the metadata endpoint, for example `https://sso.yourdomain.com/realms/YourRealm/protocol/saml/descriptor`. This setting is ignored if `SAML_IDP_METADATA` is set.
+- `SAML_IDP_METADATA` is used to directly specify the SAML configuration rather than fetching it from a URL. Useful if you don't want to hammer your SAML provider for this data, but not recommended for general use.
+- `SAML_ISSUER` is occasionally useful if you need to override the issuer value.
+- `SAML_LOGIN_PROVIDER_NAME` is the label used for the SSO login button. The user will see this value when they're prompted to log in using SSO. For example, `Your Domain SSO`.
+
+Attribute mapping is not supported for SAML.
+
+If you do not wish to allow users to create non-SSO accounts, you should also use `FEATURES_DISABLE_EMAIL_LOGIN=1` to disable non-SSO logins.
 
 ### Setup SMTP
 

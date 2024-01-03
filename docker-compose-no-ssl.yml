@@ -1,37 +1,6 @@
 version: '3'
 
 services:
-  nginx-proxy:
-    image: nginxproxy/nginx-proxy:alpine
-    labels:
-      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true"
-    networks:
-      - main
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/custom.conf:ro
-      - certs:/etc/nginx/certs
-      - vhost:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-    restart: unless-stopped
-
-  nginx-proxy-acme:
-    image: nginxproxy/acme-companion
-    networks:
-      - main
-    depends_on:
-      - nginx-proxy
-    volumes:
-      - certs:/etc/nginx/certs
-      - vhost:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - acme:/etc/acme.sh
-    restart: unless-stopped
-
   app:
     container_name: loomio-app
     image: ${LOOMIO_CONTAINER_IMAGE}:${LOOMIO_CONTAINER_TAG}
