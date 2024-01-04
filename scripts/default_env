@@ -95,6 +95,8 @@ ACTIVE_STORAGE_SERVICE=local
 # SAML SSO
 # SAML_APP_KEY=1 # just a flag, keep value as 1
 # SAML_IDP_METADATA_URL=https://saml-metadata-url-provided-by-your-SSO-provider.com/12356
+# SAML_ISSUER=an-appropriate-issuer
+# SAML_LOGIN_PROVIDER_NAME=My SAML SSO Provider Name
 
 # Sentry DSN
 # SENTRY_PUBLIC_DSN=https://1234567890@sentry.io/123
@@ -121,6 +123,7 @@ ACTIVE_STORAGE_SERVICE=local
 # OAUTH_ATTR_UID=id
 # OAUTH_ATTR_NAME=displayName
 # OAUTH_ATTR_EMAIL=mail
+# OAUTH_LOGIN_PROVIDER_NAME=My OAUTH SSO Provider Name
 
 # Theme images
 # images should be a multiple of 32px tall.
