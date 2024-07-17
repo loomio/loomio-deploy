@@ -17,7 +17,8 @@ SITE_NAME=REPLACE_WITH_HOSTNAME
 REPLY_HOSTNAME=REPLACE_WITH_HOSTNAME
 
 # hostname of the node.js app that handles websocket stuff
-CHANNELS_URI=wss://channels.REPLACE_WITH_HOSTNAME
+CHANNELS_URL=wss://channels.REPLACE_WITH_HOSTNAME
+HOCUSPOCUS_URL=wss://hocuspocus.REPLACE_WITH_HOSTNAME
 
 # smtp settings
 SMTP_AUTH=plain
