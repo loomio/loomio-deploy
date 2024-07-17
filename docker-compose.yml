@@ -131,7 +131,7 @@ services:
     environment:
       - VIRTUAL_HOST=hocuspocus.${CANONICAL_HOST}
       - LETSENCRYPT_HOST=hocuspocus.${CANONICAL_HOST}
-    cmd: npm run hocuspocus
+    command: npm run hocuspocus
 
   pgbackups:
     image: prodrigestivill/postgres-backup-local
