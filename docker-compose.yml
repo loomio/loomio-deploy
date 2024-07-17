@@ -125,6 +125,8 @@ services:
     container_name: loomio-hocuspocus
     image: loomio/loomio_channel_server
     restart: unless-stopped
+    expose:
+      - 7700
     networks:
       - main
     env_file: ./.env
