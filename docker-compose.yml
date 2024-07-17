@@ -121,6 +121,18 @@ services:
       - VIRTUAL_HOST=channels.${CANONICAL_HOST}
       - LETSENCRYPT_HOST=channels.${CANONICAL_HOST}
 
+  hocuspocus:
+    container_name: loomio-hocuspocus
+    image: loomio/loomio_channel_server
+    restart: unless-stopped
+    networks:
+      - main
+    env_file: ./.env
+    environment:
+      - VIRTUAL_HOST=hocuspocus.${CANONICAL_HOST}
+      - LETSENCRYPT_HOST=hocuspocus.${CANONICAL_HOST}
+    cmd: npm run hocuspocus
+
   pgbackups:
     image: prodrigestivill/postgres-backup-local
     restart: always
