@@ -129,6 +129,7 @@ services:
       - main
     env_file: ./.env
     environment:
+      - APP_URL=http://app:3000
       - VIRTUAL_HOST=hocuspocus.${CANONICAL_HOST}
       - LETSENCRYPT_HOST=hocuspocus.${CANONICAL_HOST}
     command: npm run hocuspocus
