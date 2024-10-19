@@ -33,8 +33,6 @@ SMTP_USE_SSL=1
 RAILS_ENV=production
 
 # Number of webserver processes and threads
-# Generally 1 worker per CPU core, 4 or so threads per worker.
-# threads are per worker. 
 # See https://github.com/puma/puma
 PUMA_WORKERS=1
 MIN_THREADS=3
