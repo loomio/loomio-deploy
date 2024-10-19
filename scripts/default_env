@@ -2,7 +2,7 @@ LOOMIO_CONTAINER_IMAGE=loomio/loomio
 LOOMIO_CONTAINER_TAG=stable
 MAILIN_CONTAINER_IMAGE=loomio/mailin-docker
 MAILIN_CONTAINER_TAG=latest
-POSTGRES_CONTAINER_TAG=15.3
+POSTGRES_CONTAINER_TAG=17.0
 
 # this is the hostname of your app eg: loomio.org
 CANONICAL_HOST=REPLACE_WITH_HOSTNAME
@@ -30,8 +30,6 @@ SMTP_PASSWORD=smtppassword
 SMTP_USE_SSL=1
 # to disable SSL comment out line (rather than changing to 0)
 
-# helper bot is the account which welcomes people to their groups.
-HELPER_BOT_EMAIL=no-reply@REPLACE_WITH_HOSTNAME
 RAILS_ENV=production
 
 # Number of webserver processes and threads
@@ -39,8 +37,8 @@ RAILS_ENV=production
 # threads are per worker. 
 # See https://github.com/puma/puma
 PUMA_WORKERS=1
-MIN_THREADS=4
-MAX_THREADS=4
+MIN_THREADS=3
+MAX_THREADS=3
 
 # Force all connections to be https
 FORCE_SSL=1
@@ -104,7 +102,7 @@ ACTIVE_STORAGE_SERVICE=local
 
 # Plausible metrics
 # PLAUSIBLE_SRC=https://plausible.io
-# PLASIBLE_SITE=REPLACE_WITH_HOSTANME
+# PLASIBLE_SITE=REPLACE_WITH_HOSTNAME
 
 # oauth providers, to let your users login using external accounts
 # FACEBOOK_APP_KEY=REPLACE
