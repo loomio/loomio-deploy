@@ -102,7 +102,7 @@ ACTIVE_STORAGE_SERVICE=local
 
 # Plausible metrics
 # PLAUSIBLE_SRC=https://plausible.io
-# PLASIBLE_SITE=REPLACE_WITH_HOSTNAME
+# PLAUSIBLE_SITE=REPLACE_WITH_HOSTNAME
 
 # oauth providers, to let your users login using external accounts
 # FACEBOOK_APP_KEY=REPLACE
