@@ -86,6 +86,8 @@ ACTIVE_STORAGE_SERVICE=local
 # FEATURES_DISABLE_HELP_LINK=1       # disable the help link
 # FEATURES_DISABLE_EMAIL_LOGIN=1     # Disable login via email (usually when you have enabled SSO of some kind)
 
+# FEATURES_DEFAULT_PATH = /group-name # rather than redirecting to dashboard, redirect to this path
+
 # Enable search engines to index public content
 # ALLOW_ROBOTS=1
 
