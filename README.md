@@ -88,6 +88,8 @@ This script will create and mount a 4GB swapfile. If you have less than 2GB RAM 
 
 By default, docker-compose.yml includes an nginx proxy container that automatically handles fetching an SSL certificate via LetsEncrypt.org. If you don't need SSL termination, or you're running Loomio from behind a proxy, you can safely remove the nginx services from the docker-compose.yml file. The loomio app container will happily speak plain HTTP on port 3000 (by default). Configuring reverse proxies and other advanced configurations are outside the scope of this documentation, but at minimum it's suggested to preserve the HTTP host header and to set X-FORWARDED-PROTO if terminating SSL upstream.
 
+If using Traefik or similar, make sure to expose the channels and hocuspocus containers (port 5000) just like the main app using their respective route (channels.CANONICAL_HOST / hocuspocus.CANONICAL_HOST). Otherwise, they will not be reachable by the client application (collaboration features and editing will not work starting 2.25.0).
+
 ### Create your ENV files
 This script creates `env` files configured for you. It also creates directories on the host to hold user data.
 
