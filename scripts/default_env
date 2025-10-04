@@ -2,7 +2,7 @@ LOOMIO_CONTAINER_IMAGE=loomio/loomio
 LOOMIO_CONTAINER_TAG=stable
 MAILIN_CONTAINER_IMAGE=loomio/mailin-docker
 MAILIN_CONTAINER_TAG=latest
-POSTGRES_CONTAINER_TAG=17.0
+POSTGRES_CONTAINER_TAG=17
 
 # this is the hostname of your app eg: loomio.org
 CANONICAL_HOST=REPLACE_WITH_HOSTNAME
@@ -29,6 +29,9 @@ SMTP_USERNAME=smtpusername
 SMTP_PASSWORD=smtppassword
 SMTP_USE_SSL=1
 # to disable SSL comment out line (rather than changing to 0)
+
+# Uncomment to set a custom notifications email address
+# NOTIFICATIONS_EMAIL_ADDRESS=notifications@example.com
 
 RAILS_ENV=production
 
