@@ -7,7 +7,7 @@ It will run all Loomio services on a single host via docker and docker compose, 
 If you just want a local install of Loomio for development, see [Setting up a Loomio development environment](https://github.com/loomio/loomio/blob/master/DEVSETUP.md).
 
 ## What you'll need
-* Root access to a server, on a public IP address, running Ubuntu (latest LTS release) with at least 1GB RAM (2GB recommended).
+* Root access to a server, on a public IP address, running Ubuntu (latest LTS release) with at least 1GB RAM.
 
 * A domain name
 
