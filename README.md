@@ -86,10 +86,6 @@ This script will create and mount a 4GB swapfile. If you have less than 2GB RAM 
 ./create_swapfile.sh
 ```
 
-### SSL teriminating proxy
-
-By default, docker-compose.yml includes an nginx proxy container that automatically handles fetching an SSL certificate via LetsEncrypt.org. If you don't need SSL termination, or you're running Loomio from behind a proxy, you can safely remove the nginx services from the docker-compose.yml file. The loomio app container will happily speak plain HTTP on port 3000 (by default). Configuring reverse proxies and other advanced configurations are outside the scope of this documentation, but at minimum it's suggested to preserve the HTTP host header and to set X-FORWARDED-PROTO if terminating SSL upstream.
-
 ### Create your ENV files
 This script creates a `.env` file configured for you.
 
