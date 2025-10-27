@@ -1,24 +1,34 @@
+POSTGRES_CONTAINER_TAG=17
 LOOMIO_CONTAINER_IMAGE=loomio/loomio
 LOOMIO_CONTAINER_TAG=stable
-MAILIN_CONTAINER_IMAGE=loomio/mailin-docker
-MAILIN_CONTAINER_TAG=latest
-POSTGRES_CONTAINER_TAG=17
+HARAKA_CONTAINER_IMAGE=loomio/haraka-rails-docker
+HARAKA_CONTAINER_TAG=stable
+CHANNELS_CONTAINER_IMAGE=loomio/loomio_channel_server
+CHANNELS_CONTAINER_TAG=stable
 
 # this is the hostname of your app eg: loomio.org
 CANONICAL_HOST=REPLACE_WITH_HOSTNAME
 
-# email address of admin of the server for LetsEncrypt
+# email address of admin of the server for LetsEncrypt. eg: you@gmail.com
 SUPPORT_EMAIL=REPLACE_WITH_CONTACT_EMAIL
 
-# the human name of the app (Default Loomio)
+# the human name of the app. eg: Loomio
 SITE_NAME=REPLACE_WITH_HOSTNAME
 
 # reply-to in email notifications
 REPLY_HOSTNAME=REPLACE_WITH_HOSTNAME
 
+# URL for channels & hocuspocus to callback to rails app
+# For the default docker-compose.yml use http://app:3000
+APP_URL=http://app:3000
+
 # hostname of the node.js app that handles websocket stuff
+# these are passed to the browser to connect to
 CHANNELS_URL=wss://channels.REPLACE_WITH_HOSTNAME
 HOCUSPOCUS_URL=wss://hocuspocus.REPLACE_WITH_HOSTNAME
+
+# url for haraka to post inbound emails
+RAILS_INBOUND_EMAIL_URL=http://app:3000/rails/action_mailbox/relay/inbound_emails
 
 # smtp settings
 SMTP_AUTH=plain
@@ -28,7 +38,7 @@ SMTP_PORT=465
 SMTP_USERNAME=smtpusername
 SMTP_PASSWORD=smtppassword
 SMTP_USE_SSL=1
-# to disable SSL comment out line (rather than changing to 0)
+# to disable SSL, comment out line (rather than changing to 0)
 
 # Uncomment to set a custom notifications email address
 # NOTIFICATIONS_EMAIL_ADDRESS=notifications@example.com
@@ -59,22 +69,22 @@ REDIS_URL=redis://redis:6379/0
 
 # attachment storage service
 # local will keep attachments on the server's disk under ./storage
-# for cloud storage options include amazon, digitalocean or s3_compatible
+# cloud storage options: amazon, digitalocean or s3_compatible
 ACTIVE_STORAGE_SERVICE=local
 
-# envs for amazon
+# configure amazon S3
 # AWS_ACCESS_KEY_ID=
 # AWS_SECRET_ACCESS_KEY=
 # AWS_BUCKET=
 # AWS_REGION=
 #
-# example envs for digitalocean
+# configure digitalocean spaces
 # DO_ENDPOINT=https://syd1.digitaloceanspaces.com
 # DO_ACCESS_KEY_ID=
 # DO_SECRET_ACCESS_KEY=
 # DO_BUCKET=abucketname
 #
-# envs for s3_compatible
+# s3_compatible
 # STORAGE_ENDPOINT
 # STORAGE_ACCESS_KEY_ID
 # STORAGE_SECRET_ACCESS_KEY
@@ -104,8 +114,6 @@ ACTIVE_STORAGE_SERVICE=local
 # oauth providers, to let your users login using external accounts
 # FACEBOOK_APP_KEY=REPLACE
 # FACEBOOK_APP_SECRET=REPLACE
-# TWITTER_APP_KEY=REPLACE
-# TWITTER_APP_SECRET=REPLACE
 # GOOGLE_APP_KEY=REPLACE
 # GOOGLE_APP_SECRET=REPLACE
 
@@ -122,26 +130,34 @@ ACTIVE_STORAGE_SERVICE=local
 ### OAuth2 and OIDC (optional)
 # auth endpoint
 # OAUTH_AUTH_URL=https://login.microsoftonline.com/token/oauth2/v2.0/authorize
+
 # token endpoint
 # OAUTH_TOKEN_URL=https://login.microsoftonline.com/token/oauth2/v2.0/token
+
 # endpoint for user profile data
 # OAUTH_PROFILE_URL=https://sso.yourdomain.com/realms/YourRealm/protocol/openid-connect/userinfo
+
 # list of scopes passed in the auth request
 # OAUTH_SCOPE=openid email profile
+
 # what OIDC refers to as the Client ID
 # OAUTH_APP_KEY=loomio
+
 # what OIDC refers to as the Client Secret
 # OAUTH_APP_SECRET=abc123
+
 # if you're not sure what your OAuth provider is returning, you can attempt a login and check the Loomio logs to see the response.
 # specifies which user profile field is used for Loomio's internal unique identifier for this user. For example, `email`.
 # OAUTH_ATTR_UID=uid
+
 # specifies which user profile field is used for Loomio's displayed name, for example `name`.
 # OAUTH_ATTR_NAME=name
- # specifies which user profile field is used for the Loomio account email address, for example `email`.
-# OAUTH_ATTR_EMAIL=email
- # the label used for the SSO login button. The user will see this value when they're prompted to log in using SSO.
-# OAUTH_LOGIN_PROVIDER_NAME=Company auth
 
+# specifies which user profile field is used for the Loomio account email address, for example `email`.
+# OAUTH_ATTR_EMAIL=email
+
+# the label used for the SSO login button. The user will see this value when they're prompted to log in using SSO.
+# OAUTH_LOGIN_PROVIDER_NAME=Company auth
 
 
 # Theme variables
@@ -152,15 +168,16 @@ ACTIVE_STORAGE_SERVICE=local
 # THEME_EMAIL_HEADER_LOGO_SRC=/files/logo_128h.png
 # THEME_EMAIL_FOOTER_LOGO_SRC=/files/logo_64h.png
 
-# used in emails
+# colors used in emails
 # THEME_PRIMARY_COLOR
 # THEME_ACCENT_COLOR
 # THEME_TEXT_ON_PRIMARY_COLOR
 # THEME_TEXT_ON_ACCENT_COLOR
 
-# Used in app
+# colors used in app
 
-# valid values light dark lightblue darkblue
+# Default theme for light and dark modes
+# valid values: light dark lightblue darkblue
 # THEME_DEFAULT_DARK_THEME=dark
 # THEME_DEFAULT_LIGHT_THEME=light
 

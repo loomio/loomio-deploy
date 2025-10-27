@@ -81,7 +81,7 @@ There are some simple scripts within this repo to help you configure your server
 This script will create and mount a 4GB swapfile. If you have less than 2GB RAM on your server then this step is required.
 
 ```sh
-./scripts/create_swapfile
+./create_swapfile.sh
 ```
 
 ### SSL teriminating proxy
@@ -94,7 +94,7 @@ This script creates a `.env` file configured for you.
 Remember to change the values to your hostname and contact email address. This is for the LetsEncypt service.
 
 ```sh
-./scripts/create_env loomio.example.com you@contact.email
+./create_env.sh loomio.example.com you@contact.email
 ```
 
 Now have a look inside the files:
@@ -103,7 +103,7 @@ Now have a look inside the files:
 cat .env
 ```
 
-Looking for SSO (SAML, OAUTH, Google etc), Theme logo and color settings, or other feature flags? [It's all in the ENV file](scripts/default_env)
+Looking for SSO (SAML, OAUTH, Google etc), Theme logo and color settings, or other feature flags? [It's all in the ENV file](/env_template)
 
 ### Setup SMTP
 
@@ -191,7 +191,7 @@ docker compose up -d
 To update Loomio to the latest stable version just run the update script.
 
 ```sh
-./scripts/update
+./update.sh
 ```
 
 To login to your running rails app console:
@@ -230,7 +230,7 @@ cat loomio_production.sql | docker exec -i loomio-db su - postgres -c 'psql loom
 
 # Updating old versions of Loomio
 
-Please upgrade through the following versions. You need to edit `.env` and change LOOMIO_CONTAINER_TAG to each version, then run `./scripts/update`. When the migrations have completed, apply the next tag and repeat.
+Please upgrade through the following versions. You need to edit `.env` and change LOOMIO_CONTAINER_TAG to each version, then run `./update.sh`. When the migrations have completed, apply the next tag and repeat.
 
 - v2.4.2
 - v2.8.8

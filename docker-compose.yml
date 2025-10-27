@@ -95,20 +95,19 @@ services:
     networks:
       - main
 
-  mailin:
-    container_name: loomio-mailin
-    image: ${MAILIN_CONTAINER_IMAGE}:${MAILIN_CONTAINER_TAG}
+  haraka:
+    container_name: loomio-haraka
+    image: ${HARAKA_CONTAINER_IMAGE}:${HARAKA_CONTAINER_TAG}
     restart: unless-stopped
+    env_file: ./.env
     networks:
       - main
     ports:
       - "25:25"
-    environment:
-      - WEBHOOK_URL=http://app:3000/email_processor/
 
   channels:
     container_name: loomio-channels
-    image: loomio/loomio_channel_server
+    image: ${CHANNELS_CONTAINER_IMAGE}:${CHANNELS_CONTAINER_TAG}
     restart: unless-stopped
     networks:
       - main
@@ -121,13 +120,12 @@ services:
 
   hocuspocus:
     container_name: loomio-hocuspocus
-    image: loomio/loomio_channel_server
+    image: ${CHANNELS_CONTAINER_IMAGE}:${CHANNELS_CONTAINER_TAG}
     restart: unless-stopped
     networks:
       - main
     env_file: ./.env
     environment:
-      - APP_URL=http://app:3000
       - VIRTUAL_HOST=hocuspocus.${CANONICAL_HOST}
       - LETSENCRYPT_HOST=hocuspocus.${CANONICAL_HOST}
     command: npm run hocuspocus
