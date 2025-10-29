@@ -6,25 +6,26 @@ HARAKA_CONTAINER_TAG=stable
 CHANNELS_CONTAINER_IMAGE=loomio/loomio_channel_server
 CHANNELS_CONTAINER_TAG=stable
 
-DEVISE_SECRET=REPLACE_WITH_DEVISE_SECRET
-SECRET_COOKIE_TOKEN=REPLACE_WITH_SECRET_COOKIE_TOKEN
-RAILS_INBOUND_EMAIL_PASSWORD=REPLACE_WITH_RAILS_INBOUND_EMAIL_PASSWORD
+# human name of the app. eg: Loomio
+SITE_NAME=REPLACE_WITH_HOSTNAME
 
-# this is the hostname of your app eg: loomio.org
+# hostname of your app eg: loomio.example.com
 CANONICAL_HOST=REPLACE_WITH_HOSTNAME
+
+# public url for app, eg: https://loomio.example.com
+PUBLIC_APP_URL=https://REPLACE_WITH_HOSTNAME
+
+# private url for app. (from node.js to rails app)
+PRIVATE_APP_URL=http://app:3000
 
 # email address of admin of the server for LetsEncrypt. eg: you@gmail.com
 SUPPORT_EMAIL=REPLACE_WITH_CONTACT_EMAIL
 
-# the human name of the app. eg: Loomio
-SITE_NAME=REPLACE_WITH_HOSTNAME
-
-# reply-to in email notifications
+# hostname with MX record of haraka service. eg: loomio.example.com
 REPLY_HOSTNAME=REPLACE_WITH_HOSTNAME
 
-# URL for channels & hocuspocus to callback to rails app
-# For the default docker-compose.yml use http://app:3000
-APP_URL=http://app:3000
+# Uncomment to set a custom notifications email address
+# NOTIFICATIONS_EMAIL_ADDRESS=notifications@loomio.example.com
 
 # hostname of the node.js app that handles websocket stuff
 # these are passed to the browser to connect to
@@ -44,13 +45,7 @@ SMTP_PASSWORD=smtppassword
 SMTP_USE_SSL=1
 # to disable SSL, comment out line (rather than changing to 0)
 
-# Uncomment to set a custom notifications email address
-# NOTIFICATIONS_EMAIL_ADDRESS=notifications@example.com
-
-RAILS_ENV=production
-
-# Number of webserver processes and threads
-# See https://github.com/puma/puma
+# Number of webserver processes and threads. See https://github.com/puma/puma
 PUMA_WORKERS=1
 MIN_THREADS=3
 MAX_THREADS=3
@@ -102,7 +97,6 @@ ACTIVE_STORAGE_SERVICE=local
 # FEATURES_DISABLE_PUBLIC_GROUPS=1   # disable /explore
 # FEATURES_DISABLE_HELP_LINK=1       # disable the help link
 # FEATURES_DISABLE_EMAIL_LOGIN=1     # Disable login via email (usually when you have enabled SSO of some kind)
-
 # FEATURES_DEFAULT_PATH = /group-name # rather than redirecting to dashboard, redirect to this path
 
 # Enable search engines to index public content
@@ -163,7 +157,6 @@ ACTIVE_STORAGE_SERVICE=local
 # the label used for the SSO login button. The user will see this value when they're prompted to log in using SSO.
 # OAUTH_LOGIN_PROVIDER_NAME=Company auth
 
-
 # Theme variables
 
 # Logos. Prefer SVG for the app logo. PNG for the others
@@ -219,3 +212,8 @@ ACTIVE_STORAGE_SERVICE=local
 
 # tell clients to reload when the server is upgraded
 LOOMIO_SYSTEM_RELOAD=1
+
+DEVISE_SECRET=REPLACE_WITH_DEVISE_SECRET
+SECRET_COOKIE_TOKEN=REPLACE_WITH_SECRET_COOKIE_TOKEN
+RAILS_INBOUND_EMAIL_PASSWORD=REPLACE_WITH_RAILS_INBOUND_EMAIL_PASSWORD
+RAILS_ENV=production
