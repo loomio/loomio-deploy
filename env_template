@@ -115,6 +115,13 @@ ACTIVE_STORAGE_SERVICE=local
 # GOOGLE_APP_KEY=REPLACE
 # GOOGLE_APP_SECRET=REPLACE
 
+# Google translate (enable "translate" button on user content)
+# this uses google-cloud-translate gem. See that gem for configuration guide.
+# TRANSLATE_CREDENTIALS="{ \"type\": \"service_account\", \"project_id\": ..."
+
+# OpenAI transcription (enable transcription of audio recordings)
+# OPENAI_API_KEY=sk-1234-abcd
+
 ### SAML SSO (optional)
 # SAML_APP_KEY=1 # just a flag, keep value as 1 to enable saml sso
 # SAML_IDP_METADATA_URL is used to specify the metadata endpoint, for example `https://sso.yourdomain.com/realms/YourRealm/protocol/saml/descriptor`. This setting is ignored if `SAML_IDP_METADATA` is set.
