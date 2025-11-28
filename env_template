@@ -53,6 +53,9 @@ MAX_THREADS=3
 # Force all connections to be https
 FORCE_SSL=1
 
+# If you terminate https connections with a proxy in front of Loomio and send Loomio http requests, uncomment this to stop Loomio respond with redirect
+# ASSUME_SSL=1
+
 # Enable rate limiting on group creation, other POST actions
 USE_RACK_ATTACK=1
 RACK_ATTACK_RATE_MULTPLIER=1
