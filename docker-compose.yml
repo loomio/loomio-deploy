@@ -146,7 +146,7 @@ services:
       - POSTGRES_HOST=db
       - POSTGRES_DB=loomio_production
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_EXTRA_OPTS=-Z6 --schema=public --blobs
       - SCHEDULE=@daily
       - BACKUP_KEEP_DAYS=7
