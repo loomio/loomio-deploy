@@ -88,7 +88,7 @@ services:
 
   redis:
     container_name: loomio-redis
-    image: redis:5.0
+    image: redis:8.4
     restart: unless-stopped
     healthcheck:
       test: ['CMD', 'redis-cli', 'ping']
