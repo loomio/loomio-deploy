@@ -98,7 +98,6 @@ ACTIVE_STORAGE_SERVICE=local
 # Uncomment these to disable features
 # FEATURES_DISABLE_CREATE_USER=1     # users must be invited
 # FEATURES_DISABLE_CREATE_GROUP=1    # users cannot create groups
-# FEATURES_DISABLE_PUBLIC_GROUPS=1   # disable /explore
 # FEATURES_DISABLE_HELP_LINK=1       # disable the help link
 # FEATURES_DISABLE_EMAIL_LOGIN=1     # Disable login via email (usually when you have enabled SSO of some kind)
 # FEATURES_DEFAULT_PATH = /group-name # rather than redirecting to dashboard, redirect to this path
