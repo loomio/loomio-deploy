@@ -1,3 +1,7 @@
+# PLEASE NOTE: To disable a setting you MUST comment out (or delete) the line.
+# If you set change SOME_FEATURE=1 to SOME_FEATURE=0, that feature is still enabled!
+# You should change comment it out like so: # SOME_FEATURE=1
+
 POSTGRES_CONTAINER_TAG=17
 LOOMIO_CONTAINER_IMAGE=loomio/loomio
 LOOMIO_CONTAINER_TAG=stable
