@@ -167,6 +167,9 @@ ACTIVE_STORAGE_SERVICE=local
 # the label used for the SSO login button. The user will see this value when they're prompted to log in using SSO.
 # OAUTH_LOGIN_PROVIDER_NAME=Company auth
 
+# prevent users from editing their name, email address, or username on the profile page.
+# LOOMIO_SSO_FORCE_USER_ATTRS=1
+
 # Theme variables
 
 # Logos. Prefer SVG for the app logo. PNG for the others
