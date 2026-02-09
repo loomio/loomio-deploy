@@ -105,30 +105,17 @@ services:
     ports:
       - "25:25"
 
-  channels:
-    container_name: loomio-channels
-    image: ${CHANNELS_CONTAINER_IMAGE}:${CHANNELS_CONTAINER_TAG}
-    restart: unless-stopped
-    networks:
-      - main
-    env_file: ./.env
-    depends_on:
-      - redis
-    environment:
-      - VIRTUAL_HOST=channels.${CANONICAL_HOST}
-      - LETSENCRYPT_HOST=channels.${CANONICAL_HOST}
-
   hocuspocus:
     container_name: loomio-hocuspocus
-    image: ${CHANNELS_CONTAINER_IMAGE}:${CHANNELS_CONTAINER_TAG}
+    image: ${LOOMIO_CONTAINER_IMAGE}:${LOOMIO_CONTAINER_TAG}
     restart: unless-stopped
     networks:
       - main
     env_file: ./.env
     environment:
+      - TASK=hocuspocus
       - VIRTUAL_HOST=hocuspocus.${CANONICAL_HOST}
       - LETSENCRYPT_HOST=hocuspocus.${CANONICAL_HOST}
-    command: npm run hocuspocus
 
   pgbackups:
     image: prodrigestivill/postgres-backup-local
