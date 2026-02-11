@@ -1,10 +1,12 @@
+# PLEASE NOTE: To disable a setting you MUST comment out (or delete) the line.
+# If you set change SOME_FEATURE=1 to SOME_FEATURE=0, that feature is still enabled!
+# You should change comment it out like so: # SOME_FEATURE=1
+
 POSTGRES_CONTAINER_TAG=17
 LOOMIO_CONTAINER_IMAGE=loomio/loomio
 LOOMIO_CONTAINER_TAG=stable
 HARAKA_CONTAINER_IMAGE=loomio/haraka-rails-docker
 HARAKA_CONTAINER_TAG=stable
-CHANNELS_CONTAINER_IMAGE=loomio/loomio_channel_server
-CHANNELS_CONTAINER_TAG=stable
 
 # human name of the app. eg: Loomio
 SITE_NAME=REPLACE_WITH_HOSTNAME
@@ -27,9 +29,7 @@ REPLY_HOSTNAME=REPLACE_WITH_HOSTNAME
 # Uncomment to set a custom notifications email address
 # NOTIFICATIONS_EMAIL_ADDRESS=notifications@loomio.example.com
 
-# hostname of the node.js app that handles websocket stuff
-# these are passed to the browser to connect to
-CHANNELS_URL=wss://channels.REPLACE_WITH_HOSTNAME
+# hocuspocus collaborative editing server
 HOCUSPOCUS_URL=wss://hocuspocus.REPLACE_WITH_HOSTNAME
 
 # url for haraka to post inbound emails
@@ -46,7 +46,7 @@ SMTP_USE_SSL=1
 # to disable SSL, comment out line (rather than changing to 0)
 
 # Number of webserver processes and threads. See https://github.com/puma/puma
-PUMA_WORKERS=1
+WEB_CONCURRENCY=auto
 MIN_THREADS=3
 MAX_THREADS=3
 
@@ -97,10 +97,15 @@ ACTIVE_STORAGE_SERVICE=local
 # Uncomment these to disable features
 # FEATURES_DISABLE_CREATE_USER=1     # users must be invited
 # FEATURES_DISABLE_CREATE_GROUP=1    # users cannot create groups
-# FEATURES_DISABLE_PUBLIC_GROUPS=1   # disable /explore
 # FEATURES_DISABLE_HELP_LINK=1       # disable the help link
 # FEATURES_DISABLE_EMAIL_LOGIN=1     # Disable login via email (usually when you have enabled SSO of some kind)
 # FEATURES_DEFAULT_PATH = /group-name # rather than redirecting to dashboard, redirect to this path
+
+# Restrict explore page to signed-in users only
+# LOOMIO_RESTRICT_EXPLORE_TO_SIGNED_IN_USERS=1
+
+# Restrict "Verify participants" feature to group admins only
+# LOOMIO_VERIFY_PARTICIPANTS_ADMIN_ONLY=1
 
 # Enable search engines to index public content
 # ALLOW_ROBOTS=1
@@ -166,6 +171,9 @@ ACTIVE_STORAGE_SERVICE=local
 
 # the label used for the SSO login button. The user will see this value when they're prompted to log in using SSO.
 # OAUTH_LOGIN_PROVIDER_NAME=Company auth
+
+# prevent users from editing their name, email address, or username on the profile page.
+# LOOMIO_SSO_FORCE_USER_ATTRS=1
 
 # Theme variables
 

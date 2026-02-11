@@ -29,10 +29,9 @@ Loomio supports "Reply by email" and to enable this you need an MX record so mai
 MX loomio.example.com, loomio.example.com, priority 0
 ```
 
-Additionally, create two CNAME records that point to `loomio.example.com`.
+Additionally, create a CNAME record for the collaborative editing server.
 
 ```
-CNAME channels.loomio.example.com, loomio.example.com
 CNAME hocuspocus.loomio.example.com, loomio.example.com
 ```
 
