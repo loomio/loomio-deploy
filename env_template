@@ -159,15 +159,14 @@ ACTIVE_STORAGE_SERVICE=local
 # what OIDC refers to as the Client Secret
 # OAUTH_APP_SECRET=abc123
 
-# if you're not sure what your OAuth provider is returning, you can attempt a login and check the Loomio logs to see the response.
-# specifies which user profile field is used for Loomio's internal unique identifier for this user. For example, `email`.
-# OAUTH_ATTR_UID=uid
-
-# specifies which user profile field is used for Loomio's displayed name, for example `name`.
+# The following OAUTH_ATTR settings map fields from your OAuth provider's user profile response
+# to Loomio user attributes. The defaults match the standard OIDC claim names, so most
+# providers (Keycloak, Authentik, Azure AD, etc.) will work without setting these.
+# Only override if your provider uses non-standard field names.
+# OAUTH_ATTR_UID=sub
 # OAUTH_ATTR_NAME=name
-
-# specifies which user profile field is used for the Loomio account email address, for example `email`.
 # OAUTH_ATTR_EMAIL=email
+# OAUTH_ATTR_PICTURE=picture
 
 # the label used for the SSO login button. The user will see this value when they're prompted to log in using SSO.
 # OAUTH_LOGIN_PROVIDER_NAME=Company auth
