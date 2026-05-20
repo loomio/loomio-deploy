@@ -117,6 +117,11 @@ ACTIVE_STORAGE_SERVICE=local
 # PLAUSIBLE_SRC=https://plausible.io
 # PLAUSIBLE_SITE=REPLACE_WITH_HOSTNAME
 
+# Cloudflare Turnstile CAPTCHA (optional, protects registration and login from bots)
+# Get keys at https://dash.cloudflare.com/?to=/:account/turnstile
+# TURNSTILE_SITE_KEY=your-site-key
+# TURNSTILE_SECRET_KEY=your-secret-key
+
 # oauth providers, to let your users login using external accounts
 # FACEBOOK_APP_KEY=REPLACE
 # FACEBOOK_APP_SECRET=REPLACE
