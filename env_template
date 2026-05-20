@@ -139,6 +139,7 @@ ACTIVE_STORAGE_SERVICE=local
 # SAML_ISSUER=an-appropriate-issuer
 # SAML_LOGIN_PROVIDER_NAME is the label used for the SSO login button. The user will see this value when they're prompted to log in using SSO. For example, `Your Domain SSO`.
 # SAML_LOGIN_PROVIDER_NAME=My SAML SSO Provider Name
+# SAML_ALLOW_IDP_INITIATED=1 # Set to allow IdP-initiated SSO flows (e.g. Okta tiles, Azure AD app launcher). By default Loomio requires SP-initiated flows for security. Only enable this if your IdP does not support SP-initiated SSO.
 
 ### OAuth2 and OIDC (optional)
 # auth endpoint
