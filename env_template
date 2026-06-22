@@ -69,6 +69,9 @@ DATABASE_URL=postgresql://postgres:REPLACE_WITH_POSTGRES_PASSWORD@db/loomio_prod
 # Redis URL
 REDIS_URL=redis://redis:6379/0
 
+# maximum file upload size in megabytes (default: 1024)
+# FILE_UPLOAD_MAX_MB=100
+
 # attachment storage service
 # local will keep attachments on the server's disk under ./storage
 # cloud storage options: amazon, digitalocean or s3_compatible
