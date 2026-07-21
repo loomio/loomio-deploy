@@ -140,6 +140,22 @@ Run `crontab -e` and append the following line:
 0 * * * *  /usr/bin/docker exec loomio-worker bundle exec rake loomio:hourly_tasks > ~/rake.log 2>&1
 ```
 
+## Background jobs and Redis
+
+Background jobs run with Solid Queue and are stored in PostgreSQL. The `worker` service starts Solid Queue automatically, and instance administrators can monitor jobs at `/admin/jobs`.
+
+Redis is used only for caching and Action Cable. It is recommended for production installations because moving cache and live-update traffic to PostgreSQL can place substantial additional load on the database.
+
+The default Redis service is configured as a bounded, non-persistent cache. It disables RDB and append-only persistence, and uses `allkeys-lru` eviction when it reaches `REDIS_MAXMEMORY`. Losing Redis data may cause cache misses or live clients to reconnect, but it does not lose jobs, sessions, or primary application data.
+
+Set the memory limit in `.env`:
+
+```sh
+REDIS_MAXMEMORY=256mb
+```
+
+Loomio also supports running without Redis. Remove `REDIS_CACHE_URL`, the Redis service, and the app service's Redis dependency to use PostgreSQL-backed Solid Cache and Solid Cable instead. This is intended for small or low-traffic installations.
+
 ## Starting the services
 This command starts the database, application, reply-by-email, and live-update services all at once.
 
@@ -225,6 +241,51 @@ Restore SQL
 ```
 cat loomio_production.sql | docker exec -i loomio-db su - postgres -c 'psql loomio_production'
 ```
+
+## Push notifications (optional)
+
+Loomio supports browser push notifications. To enable them, you need to generate VAPID keys and add them to your `.env` file.
+
+### Generate VAPID keys
+
+Run this from within the Loomio container:
+
+```sh
+docker compose run app ruby -e "require 'web_push'; keys = WebPush.generate_key; puts \"VAPID_PUBLIC_KEY=#{keys.public_key}\"; puts \"VAPID_PRIVATE_KEY=#{keys.private_key}\""
+```
+
+### Add to `.env`
+
+Copy the output into your `.env` file:
+
+```
+VAPID_PUBLIC_KEY=BGxH...your_public_key...
+VAPID_PRIVATE_KEY=your_private_key
+```
+
+Then restart:
+
+```sh
+docker compose down
+docker compose up -d
+```
+
+Users can then enable push notifications from the **Push notification devices** page in their settings sidebar.
+
+## Upgrading from Sidekiq to Solid Queue
+
+Loomio 3.1 replaces Sidekiq with Solid Queue. Outstanding Sidekiq jobs are not transferred automatically. Skipping them does not prevent the upgrade or affect primary application data.
+
+To process outstanding jobs before upgrading, stop the application and worker while they are still running the old Sidekiq-enabled image:
+
+```sh
+docker compose stop app worker
+docker compose run --rm -v "./drain_sidekiq_before_job_cutover.rb:/tmp/drain_sidekiq_before_job_cutover.rb:ro" app bundle exec rails runner /tmp/drain_sidekiq_before_job_cutover.rb
+```
+
+The script executes queued and scheduled jobs, removing each one after it succeeds. Scheduled jobs run immediately, even when their scheduled time has not arrived. Retry and dead jobs are reported but are not executed.
+
+After reviewing the output, run `./update.sh`. The new `worker` service starts Solid Queue through `bin/jobs start`.
 
 # Updating old versions of Loomio
 

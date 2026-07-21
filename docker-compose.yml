@@ -91,6 +91,16 @@ services:
     container_name: loomio-redis
     image: redis:8.4
     restart: unless-stopped
+    command:
+      - redis-server
+      - --save
+      - ""
+      - --appendonly
+      - "no"
+      - --maxmemory
+      - "${REDIS_MAXMEMORY:-256mb}"
+      - --maxmemory-policy
+      - allkeys-lru
     healthcheck:
       test: ['CMD', 'redis-cli', 'ping']
     networks:
