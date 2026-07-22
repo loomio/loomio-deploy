@@ -229,37 +229,9 @@ Restore SQL
 cat loomio_production.sql | docker exec -i loomio-db su - postgres -c 'psql loomio_production'
 ```
 
-## Push notifications (optional)
+## Upgrade notes
 
-Loomio supports browser push notifications. To enable them, you need to generate VAPID keys and add them to your `.env` file.
-
-### Generate VAPID keys
-
-Run this from within the Loomio container:
-
-```sh
-docker compose run app ruby -e "require 'web_push'; keys = WebPush.generate_key; puts \"VAPID_PUBLIC_KEY=#{keys.public_key}\"; puts \"VAPID_PRIVATE_KEY=#{keys.private_key}\""
-```
-
-### Add to `.env`
-
-Copy the output into your `.env` file:
-
-```
-VAPID_PUBLIC_KEY=BGxH...your_public_key...
-VAPID_PRIVATE_KEY=your_private_key
-```
-
-Then restart:
-
-```sh
-docker compose down
-docker compose up -d
-```
-
-Users can then enable push notifications from the **Push notification devices** page in their settings sidebar.
-
-## Upgrading from Sidekiq to Solid Queue
+### Upgrading from Sidekiq to Solid Queue
 
 Loomio 3.1 replaces Sidekiq with Solid Queue. Outstanding Sidekiq jobs are not transferred automatically. Skipping them does not prevent the upgrade or affect primary application data.
 
@@ -274,7 +246,7 @@ The script executes queued and scheduled jobs, removing each one after it succee
 
 After reviewing the output, run `./update.sh`. The new `worker` service starts Solid Queue through `bin/jobs start`.
 
-# Updating old versions of Loomio
+### Updating old versions of Loomio
 
 Please upgrade through the following versions. You need to edit `.env` and change LOOMIO_CONTAINER_TAG to each version, then run `./update.sh`. When the migrations have completed, apply the next tag and repeat.
 
