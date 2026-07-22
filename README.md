@@ -77,15 +77,6 @@ cd loomio-deploy
 
 The commands below assume your working directory is this repo, on your server.
 
-### Setup a swapfile (optional)
-There are some simple scripts within this repo to help you configure your server.
-
-This script will create and mount a 4GB swapfile. If you have less than 2GB RAM on your server then this step is required.
-
-```sh
-./create_swapfile.sh
-```
-
 ### Create your ENV files
 This script creates a `.env` file configured for you.
 
@@ -126,22 +117,6 @@ This command initializes a new database for your Loomio instance to use.
 docker compose up -d db
 docker compose run app rake db:setup
 ```
-
-## Background jobs and Redis
-
-Background jobs run with Solid Queue and are stored in PostgreSQL. The `worker` service starts Solid Queue automatically, and instance administrators can monitor jobs at `/admin/jobs`.
-
-Redis is used only for caching and Action Cable. It is recommended for production installations because moving cache and live-update traffic to PostgreSQL can place substantial additional load on the database.
-
-The default Redis service is configured as a bounded, non-persistent cache. It disables RDB and append-only persistence, and uses `allkeys-lru` eviction when it reaches `REDIS_MAXMEMORY`. Losing Redis data may cause cache misses or live clients to reconnect, but it does not lose jobs, sessions, or primary application data.
-
-Set the memory limit in `.env`:
-
-```sh
-REDIS_MAXMEMORY=256mb
-```
-
-Loomio also supports running without Redis. Remove `REDIS_CACHE_URL`, the Redis service, and the app service's Redis dependency to use PostgreSQL-backed Solid Cache and Solid Cable instead. This is intended for small or low-traffic installations.
 
 ## Starting the services
 This command starts the database, application, reply-by-email, and live-update services all at once.

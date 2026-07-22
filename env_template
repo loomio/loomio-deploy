@@ -68,7 +68,7 @@ DATABASE_URL=postgresql://postgres:REPLACE_WITH_POSTGRES_PASSWORD@db/loomio_prod
 
 # Redis is used for cache and Action Cable only. Existing REDIS_URL settings remain supported.
 REDIS_CACHE_URL=redis://redis:6379/0
-# Maximum Redis cache memory. Less recently used keys are discarded when this limit is reached.
+# Maximum memory used by the Redis cache (default: 256mb). Least recently used keys are discarded when this limit is reached.
 REDIS_MAXMEMORY=256mb
 
 # maximum file upload size in megabytes (default: 1024)
