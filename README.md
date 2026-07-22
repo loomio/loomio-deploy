@@ -229,11 +229,11 @@ Restore SQL
 cat loomio_production.sql | docker exec -i loomio-db su - postgres -c 'psql loomio_production'
 ```
 
-## Upgrade notes
+## Upgrade guide
 
-### Upgrading from Sidekiq to Solid Queue
+### 3.1.0
 
-Loomio 3.1 replaces Sidekiq with Solid Queue. Outstanding Sidekiq jobs are not transferred automatically. Skipping them does not prevent the upgrade or affect primary application data.
+Loomio 3.1.0 replaces Sidekiq with Solid Queue. Migrating outstanding Sidekiq jobs is optional, and they are not transferred automatically. Skipping them does not prevent the upgrade or affect primary application data.
 
 To process outstanding jobs before upgrading, stop the application and worker while they are still running the old Sidekiq-enabled image:
 
@@ -246,9 +246,9 @@ The script executes queued and scheduled jobs, removing each one after it succee
 
 After reviewing the output, run `./update.sh`. The new `worker` service starts Solid Queue through `bin/jobs start`.
 
-### Updating old versions of Loomio
+### Upgrading an older install
 
-Please upgrade through the following versions. You need to edit `.env` and change LOOMIO_CONTAINER_TAG to each version, then run `./update.sh`. When the migrations have completed, apply the next tag and repeat.
+The following stepping-stone versions are required when upgrading an older Loomio install. Edit `.env` and change `LOOMIO_CONTAINER_TAG` to each version, then run `./update.sh`. When the migrations have completed, apply the next tag and repeat.
 
 - v2.4.2
 - v2.8.8
