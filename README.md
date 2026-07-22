@@ -1,4 +1,4 @@
-# Loomio deployment
+# Loomio deploy has moved
 
 The Loomio deployment configuration and documentation have moved into the main [loomio/loomio repository](https://github.com/loomio/loomio/tree/master/deploy).
 
